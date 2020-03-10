@@ -1,0 +1,1 @@
+{"version":3,"sources":["components/app/style.scss"],"names":[],"mappings":"AAAA;EACE;;;AAGF;EACE","file":"app.a2213586.css","sourceRoot":"../src","sourcesContent":["h1 {\n  font-family: \"Permanent Marker\", sans-serif;\n}\n\np {\n  font-family: \"Roboto\", sans-serif;\n}\n"]}

@@ -8,7 +8,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "parcel ./src/index.html --public-url '.'"
+    "dev": "parcel ./src/index.html"
   },
   "keywords": [],
   "author": "Ana Martins",
