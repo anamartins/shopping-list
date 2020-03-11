@@ -1,6 +1,7 @@
 import React from "react";
 import Item from "/components/item";
 import PropTypes from "prop-types";
+import "./style.scss";
 
 class List extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class List extends React.Component {
           key={this.props.list[i].id}
           number={this.props.list[i].number}
           text={this.props.list[i].text}
+          isChecked={this.props.list[i]}
         />
       );
     }

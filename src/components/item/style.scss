@@ -1,0 +1,24 @@
+.item {
+  display: flex;
+  cursor: pointer;
+
+  .number,
+  .text {
+    margin: 2% 1%;
+    font-family: "Roboto", sans-serif;
+    font-size: 2rem;
+  }
+
+  .number {
+    margin-right: 3%;
+    .check {
+      visibility: hidden;
+    }
+  }
+
+  &:hover {
+    .check {
+      visibility: visible;
+    }
+  }
+}

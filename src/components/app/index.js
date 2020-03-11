@@ -16,6 +16,7 @@ class App extends React.Component {
     if (localStorageList !== null) {
       list = JSON.parse(localStorageList);
     }
+    this.state.list = list;
 
     this.generateItemID = this.generateItemID.bind(this);
     this.addItem = this.addItem.bind(this);
@@ -45,9 +46,8 @@ class App extends React.Component {
       isChecked: false
     });
 
-    console.log("list", list);
-    this.updateLocalStorage();
     this.setState({ list: list });
+    this.updateLocalStorage();
   }
 
   render() {

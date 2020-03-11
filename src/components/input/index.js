@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "./style.scss";
 
 class Input extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Input extends React.Component {
   updateLocalStorage() {}
 
   onNumberChange(event) {
-    this.setState({ number: event.target.value });
+    this.setState({ number: parseInt(event.target.value) });
   }
 
   onTextChange(event) {
@@ -41,6 +42,7 @@ class Input extends React.Component {
       <div className="input">
         <input
           type="number"
+          min="1"
           value={this.state.number}
           onChange={this.onNumberChange}
         ></input>
@@ -49,6 +51,9 @@ class Input extends React.Component {
           value={this.state.text}
           onChange={this.onTextChange}
           onKeyPress={this.onKeyPress}
+          minLength="1"
+          maxLength="40"
+          size="45"
         ></input>
         <button type="button" onClick={this.onClickButton}>
           + add
