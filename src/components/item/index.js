@@ -5,18 +5,24 @@ import "./style.scss";
 class Item extends React.Component {
   constructor(props) {
     super(props);
+
+    this.onDivClick = this.onDivClick.bind(this);
   }
 
-  onDivClick(event) {
-    let target = event.target;
-    target.parentNode.style.textDecoration = "line-through";
+  onDivClick() {
+    this.props.onClickItem(this.props.id);
   }
 
   render() {
     return (
-      <div className="item" onClick={this.onDivClick}>
+      <div
+        className={this.props.isChecked ? "item checked" : "item"}
+        onClick={this.onDivClick}
+      >
         <p className="number">
-          <span className="check">✓</span>
+          <span className={this.props.isChecked ? "invisible" : "check"}>
+            ✓
+          </span>
           {this.props.number}
         </p>
         <p className="text">{this.props.text}</p>
@@ -26,8 +32,11 @@ class Item extends React.Component {
 }
 
 Item.propTypes = {
+  id: PropTypes.string,
   number: PropTypes.number,
-  text: PropTypes.string
+  text: PropTypes.string,
+  isChecked: PropTypes.bool,
+  onClickItem: PropTypes.func
 };
 
 export default Item;

@@ -18,8 +18,10 @@ class App extends React.Component {
     }
     this.state.list = list;
 
+    this.updateLocalStorage = this.updateLocalStorage.bind(this);
     this.generateItemID = this.generateItemID.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.checkItem = this.checkItem.bind(this);
   }
 
   updateLocalStorage() {
@@ -45,6 +47,19 @@ class App extends React.Component {
       text: text,
       isChecked: false
     });
+    this.setState({ list: list });
+    this.updateLocalStorage();
+  }
+
+  checkItem(id) {
+    let list = this.state.list;
+    let index = list.findIndex(item => item.id === id);
+
+    console.log("index", index);
+    console.log("list", list);
+    console.log("id", id);
+
+    list[index].isChecked = true;
 
     this.setState({ list: list });
     this.updateLocalStorage();
@@ -55,7 +70,7 @@ class App extends React.Component {
       <div className="wrapper">
         <h1>Don't forget to buy!</h1>
         <Input addItem={this.addItem} />
-        <List list={this.state.list} />
+        <List list={this.state.list} checkItem={this.checkItem} />
       </div>
     );
   }

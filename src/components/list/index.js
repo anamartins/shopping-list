@@ -6,6 +6,13 @@ import "./style.scss";
 class List extends React.Component {
   constructor(props) {
     super(props);
+
+    this.onClickItem = this.onClickItem.bind(this);
+    this.renderItems = this.renderItems.bind(this);
+  }
+
+  onClickItem(id) {
+    this.props.checkItem(id);
   }
 
   renderItems() {
@@ -14,12 +21,15 @@ class List extends React.Component {
       list.push(
         <Item
           key={this.props.list[i].id}
+          id={this.props.list[i].id}
           number={this.props.list[i].number}
           text={this.props.list[i].text}
-          isChecked={this.props.list[i]}
+          isChecked={this.props.list[i].isChecked}
+          onClickItem={this.onClickItem}
         />
       );
     }
+    console.log("list on list", list);
     return list;
   }
 
@@ -29,7 +39,8 @@ class List extends React.Component {
 }
 
 List.propTypes = {
-  list: PropTypes.array
+  list: PropTypes.array,
+  checkItem: PropTypes.func
 };
 
 export default List;

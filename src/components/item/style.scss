@@ -16,9 +16,17 @@
     }
   }
 
+  .invisible {
+    visibility: hidden;
+  }
+
   &:hover {
     .check {
       visibility: visible;
     }
   }
+}
+
+.checked {
+  text-decoration: line-through;
 }

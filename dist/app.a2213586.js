@@ -29395,9 +29395,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -29407,27 +29407,30 @@ var Item = /*#__PURE__*/function (_React$Component) {
   _inherits(Item, _React$Component);
 
   function Item(props) {
+    var _this;
+
     _classCallCheck(this, Item);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Item).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Item).call(this, props));
+    _this.onDivClick = _this.onDivClick.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Item, [{
     key: "onDivClick",
-    value: function onDivClick(event) {
-      var target = event.target;
-      target.parentNode.style.textDecoration = "line-through";
+    value: function onDivClick() {
+      this.props.onClickItem(this.props.id);
     }
   }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        className: "item",
+        className: this.props.isChecked ? "item checked" : "item",
         onClick: this.onDivClick
       }, _react.default.createElement("p", {
         className: "number"
       }, _react.default.createElement("span", {
-        className: "check"
+        className: this.props.isChecked ? "invisible" : "check"
       }, "\u2713"), this.props.number), _react.default.createElement("p", {
         className: "text"
       }, this.props.text));
@@ -29438,8 +29441,11 @@ var Item = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 Item.propTypes = {
+  id: _propTypes.default.string,
   number: _propTypes.default.number,
-  text: _propTypes.default.string
+  text: _propTypes.default.string,
+  isChecked: _propTypes.default.bool,
+  onClickItem: _propTypes.default.func
 };
 var _default = Item;
 exports.default = _default;
@@ -29476,9 +29482,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -29488,12 +29494,22 @@ var List = /*#__PURE__*/function (_React$Component) {
   _inherits(List, _React$Component);
 
   function List(props) {
+    var _this;
+
     _classCallCheck(this, List);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(List).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(List).call(this, props));
+    _this.onClickItem = _this.onClickItem.bind(_assertThisInitialized(_this));
+    _this.renderItems = _this.renderItems.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(List, [{
+    key: "onClickItem",
+    value: function onClickItem(id) {
+      this.props.checkItem(id);
+    }
+  }, {
     key: "renderItems",
     value: function renderItems() {
       var list = [];
@@ -29501,12 +29517,15 @@ var List = /*#__PURE__*/function (_React$Component) {
       for (var i = 0; i < this.props.list.length; i++) {
         list.push(_react.default.createElement(_item.default, {
           key: this.props.list[i].id,
+          id: this.props.list[i].id,
           number: this.props.list[i].number,
           text: this.props.list[i].text,
-          isChecked: this.props.list[i]
+          isChecked: this.props.list[i].isChecked,
+          onClickItem: this.onClickItem
         }));
       }
 
+      console.log("list on list", list);
       return list;
     }
   }, {
@@ -29522,7 +29541,8 @@ var List = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 List.propTypes = {
-  list: _propTypes.default.array
+  list: _propTypes.default.array,
+  checkItem: _propTypes.default.func
 };
 var _default = List;
 exports.default = _default;
@@ -29584,8 +29604,10 @@ var App = /*#__PURE__*/function (_React$Component) {
     }
 
     _this.state.list = list;
+    _this.updateLocalStorage = _this.updateLocalStorage.bind(_assertThisInitialized(_this));
     _this.generateItemID = _this.generateItemID.bind(_assertThisInitialized(_this));
     _this.addItem = _this.addItem.bind(_assertThisInitialized(_this));
+    _this.checkItem = _this.checkItem.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -29618,6 +29640,22 @@ var App = /*#__PURE__*/function (_React$Component) {
       this.updateLocalStorage();
     }
   }, {
+    key: "checkItem",
+    value: function checkItem(id) {
+      var list = this.state.list;
+      var index = list.findIndex(function (item) {
+        return item.id === id;
+      });
+      console.log("index", index);
+      console.log("list", list);
+      console.log("id", id);
+      list[index].isChecked = true;
+      this.setState({
+        list: list
+      });
+      this.updateLocalStorage();
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
@@ -29625,7 +29663,8 @@ var App = /*#__PURE__*/function (_React$Component) {
       }, _react.default.createElement("h1", null, "Don't forget to buy!"), _react.default.createElement(_input.default, {
         addItem: this.addItem
       }), _react.default.createElement(_list.default, {
-        list: this.state.list
+        list: this.state.list,
+        checkItem: this.checkItem
       }));
     }
   }]);
@@ -29662,7 +29701,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55846" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50956" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

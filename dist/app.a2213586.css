@@ -34,8 +34,15 @@
 .item .number .check {
   visibility: hidden;
 }
+.item .invisible {
+  visibility: hidden;
+}
 .item:hover .check {
   visibility: visible;
+}
+
+.checked {
+  text-decoration: line-through;
 }
 .list {
   display: flex;
