@@ -7,7 +7,7 @@ class Input extends React.Component {
     super(props);
 
     this.state = {
-      number: 0,
+      number: 1,
       text: ""
     };
 
@@ -34,7 +34,7 @@ class Input extends React.Component {
 
   onClickButton() {
     this.props.addItem(this.state.number, this.state.text);
-    this.setState({ number: 0, text: "" });
+    this.setState({ number: 1, text: "" });
   }
 
   render() {
@@ -49,6 +49,7 @@ class Input extends React.Component {
         <input
           type="text"
           value={this.state.text}
+          placeholder="write here..."
           onChange={this.onTextChange}
           onKeyPress={this.onKeyPress}
           minLength="1"

@@ -7,13 +7,24 @@
     margin: 2% 1%;
     font-family: "Roboto", sans-serif;
     font-size: 2rem;
+    .check {
+      visibility: hidden;
+    }
+  }
+
+  .delete {
+    margin: auto 1%;
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+    visibility: hidden;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .number {
     margin-right: 3%;
-    .check {
-      visibility: hidden;
-    }
   }
 
   .invisible {
@@ -21,12 +32,15 @@
   }
 
   &:hover {
-    .check {
+    .check,
+    .delete {
       visibility: visible;
     }
   }
 }
 
 .checked {
-  text-decoration: line-through;
+  p {
+    text-decoration: line-through;
+  }
 }

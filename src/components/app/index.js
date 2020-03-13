@@ -2,6 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Input from "/components/input";
 import List from "/components/list";
+import {
+  EmailShareButton,
+  TelegramShareButton,
+  WhatsappShareButton
+} from "react-share";
 import "./style.scss";
 
 class App extends React.Component {
@@ -22,6 +27,7 @@ class App extends React.Component {
     this.generateItemID = this.generateItemID.bind(this);
     this.addItem = this.addItem.bind(this);
     this.checkItem = this.checkItem.bind(this);
+    this.removeItem = this.removeItem.bind(this);
   }
 
   updateLocalStorage() {
@@ -55,12 +61,17 @@ class App extends React.Component {
     let list = this.state.list;
     let index = list.findIndex(item => item.id === id);
 
-    console.log("index", index);
-    console.log("list", list);
-    console.log("id", id);
-
     list[index].isChecked = true;
 
+    this.setState({ list: list });
+    this.updateLocalStorage();
+  }
+
+  removeItem(id) {
+    let list = this.state.list;
+    let index = list.findIndex(item => item.id === id);
+
+    list.splice(index, 1);
     this.setState({ list: list });
     this.updateLocalStorage();
   }
@@ -70,7 +81,11 @@ class App extends React.Component {
       <div className="wrapper">
         <h1>Don't forget to buy!</h1>
         <Input addItem={this.addItem} />
-        <List list={this.state.list} checkItem={this.checkItem} />
+        <List
+          list={this.state.list}
+          checkItem={this.checkItem}
+          deleteItem={this.removeItem}
+        />
       </div>
     );
   }

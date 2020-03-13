@@ -7,25 +7,32 @@ class Item extends React.Component {
     super(props);
 
     this.onDivClick = this.onDivClick.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
 
   onDivClick() {
     this.props.onClickItem(this.props.id);
   }
 
+  onDeleteClick() {
+    this.props.deleteItem(this.props.id);
+  }
+
   render() {
     return (
-      <div
-        className={this.props.isChecked ? "item checked" : "item"}
-        onClick={this.onDivClick}
-      >
-        <p className="number">
+      <div className={this.props.isChecked ? "item checked" : "item"}>
+        <p className="number" onClick={this.onDivClick}>
           <span className={this.props.isChecked ? "invisible" : "check"}>
             ✓
           </span>
           {this.props.number}
         </p>
-        <p className="text">{this.props.text}</p>
+        <p className="text" onClick={this.onDivClick}>
+          {this.props.text}
+        </p>
+        <span className="delete" onClick={this.onDeleteClick}>
+          delete
+        </span>
       </div>
     );
   }
@@ -36,7 +43,8 @@ Item.propTypes = {
   number: PropTypes.number,
   text: PropTypes.string,
   isChecked: PropTypes.bool,
-  onClickItem: PropTypes.func
+  onClickItem: PropTypes.func,
+  deleteItem: PropTypes.func
 };
 
 export default Item;

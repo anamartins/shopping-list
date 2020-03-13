@@ -28,21 +28,45 @@
   font-family: "Roboto", sans-serif;
   font-size: 2rem;
 }
+.item .number .check,
+.item .text .check {
+  visibility: hidden;
+}
+.item .delete {
+  margin: auto 1%;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  visibility: hidden;
+}
+.item .delete:hover {
+  text-decoration: underline;
+}
 .item .number {
   margin-right: 3%;
-}
-.item .number .check {
-  visibility: hidden;
 }
 .item .invisible {
   visibility: hidden;
 }
-.item:hover .check {
+.item:hover .check,
+.item:hover .delete {
   visibility: visible;
 }
 
-.checked {
+.checked p {
   text-decoration: line-through;
+}
+.print {
+  text-align: right;
+}
+.print img {
+  width: 7%;
+  padding: 2%;
+  margin: 2%;
+  cursor: pointer;
+}
+.print img:hover {
+  background-color: #e8c574;
+  border-radius: 5px;
 }
 .list {
   display: flex;
@@ -50,8 +74,15 @@
   text-align: left;
   width: 50%;
   margin: 1% auto;
-  padding: 2% 5%;
+  padding: 2% 2% 0 5%;
   background-color: #ffe88c;
+}
+
+.doodle {
+  padding: 3%;
+}
+.doodle img {
+  width: 40%;
 }
 html {
   height: 100%;
@@ -65,6 +96,19 @@ h1 {
 
 .wrapper {
   text-align: center;
+}
+
+@media print {
+  .input,
+.print {
+    visibility: hidden;
+  }
+
+  .list {
+    background-color: white;
+    width: 90%;
+    margin: -10% 10%;
+  }
 }
 
 /*# sourceMappingURL=/app.a2213586.css.map */

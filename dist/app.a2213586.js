@@ -29288,7 +29288,7 @@ var Input = /*#__PURE__*/function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Input).call(this, props));
     _this.state = {
-      number: 0,
+      number: 1,
       text: ""
     };
     _this.onNumberChange = _this.onNumberChange.bind(_assertThisInitialized(_this));
@@ -29327,7 +29327,7 @@ var Input = /*#__PURE__*/function (_React$Component) {
     value: function onClickButton() {
       this.props.addItem(this.state.number, this.state.text);
       this.setState({
-        number: 0,
+        number: 1,
         text: ""
       });
     }
@@ -29344,6 +29344,7 @@ var Input = /*#__PURE__*/function (_React$Component) {
       }), _react.default.createElement("input", {
         type: "text",
         value: this.state.text,
+        placeholder: "write here...",
         onChange: this.onTextChange,
         onKeyPress: this.onKeyPress,
         minLength: "1",
@@ -29413,6 +29414,7 @@ var Item = /*#__PURE__*/function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Item).call(this, props));
     _this.onDivClick = _this.onDivClick.bind(_assertThisInitialized(_this));
+    _this.onDeleteClick = _this.onDeleteClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -29422,18 +29424,27 @@ var Item = /*#__PURE__*/function (_React$Component) {
       this.props.onClickItem(this.props.id);
     }
   }, {
+    key: "onDeleteClick",
+    value: function onDeleteClick() {
+      this.props.deleteItem(this.props.id);
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        className: this.props.isChecked ? "item checked" : "item",
-        onClick: this.onDivClick
+        className: this.props.isChecked ? "item checked" : "item"
       }, _react.default.createElement("p", {
-        className: "number"
+        className: "number",
+        onClick: this.onDivClick
       }, _react.default.createElement("span", {
         className: this.props.isChecked ? "invisible" : "check"
       }, "\u2713"), this.props.number), _react.default.createElement("p", {
-        className: "text"
-      }, this.props.text));
+        className: "text",
+        onClick: this.onDivClick
+      }, this.props.text), _react.default.createElement("span", {
+        className: "delete",
+        onClick: this.onDeleteClick
+      }, "delete"));
     }
   }]);
 
@@ -29445,11 +29456,80 @@ Item.propTypes = {
   number: _propTypes.default.number,
   text: _propTypes.default.string,
   isChecked: _propTypes.default.bool,
-  onClickItem: _propTypes.default.func
+  onClickItem: _propTypes.default.func,
+  deleteItem: _propTypes.default.func
 };
 var _default = Item;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","./style.scss":"components/item/style.scss"}],"components/list/style.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","./style.scss":"components/item/style.scss"}],"components/print/style.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/print/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./style.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Print = /*#__PURE__*/function (_React$Component) {
+  _inherits(Print, _React$Component);
+
+  function Print(props) {
+    _classCallCheck(this, Print);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Print).call(this, props));
+  }
+
+  _createClass(Print, [{
+    key: "onPrinterClick",
+    value: function onPrinterClick() {
+      window.print();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "print"
+      }, _react.default.createElement("img", {
+        src: "/img/printer.svg",
+        onClick: this.onPrinterClick
+      }));
+    }
+  }]);
+
+  return Print;
+}(_react.default.Component);
+
+var _default = Print;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./style.scss":"components/print/style.scss"}],"components/list/style.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -29465,6 +29545,8 @@ exports.default = void 0;
 var _react = _interopRequireDefault(require("react"));
 
 var _item = _interopRequireDefault(require("/components/item"));
+
+var _print = _interopRequireDefault(require("/components/print"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -29500,6 +29582,7 @@ var List = /*#__PURE__*/function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(List).call(this, props));
     _this.onClickItem = _this.onClickItem.bind(_assertThisInitialized(_this));
+    _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_this));
     _this.renderItems = _this.renderItems.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -29508,6 +29591,11 @@ var List = /*#__PURE__*/function (_React$Component) {
     key: "onClickItem",
     value: function onClickItem(id) {
       this.props.checkItem(id);
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      this.props.deleteItem(id);
     }
   }, {
     key: "renderItems",
@@ -29521,19 +29609,23 @@ var List = /*#__PURE__*/function (_React$Component) {
           number: this.props.list[i].number,
           text: this.props.list[i].text,
           isChecked: this.props.list[i].isChecked,
-          onClickItem: this.onClickItem
+          onClickItem: this.onClickItem,
+          deleteItem: this.deleteItem
         }));
       }
 
-      console.log("list on list", list);
       return list;
     }
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", {
+      return this.props.list.length !== 0 ? _react.default.createElement("div", {
         className: "list"
-      }, this.renderItems());
+      }, this.renderItems(), _react.default.createElement(_print.default, null)) : _react.default.createElement("div", {
+        className: "doodle"
+      }, _react.default.createElement("img", {
+        src: "/img/girl-computer.svg"
+      }));
     }
   }]);
 
@@ -29542,11 +29634,4475 @@ var List = /*#__PURE__*/function (_React$Component) {
 
 List.propTypes = {
   list: _propTypes.default.array,
-  checkItem: _propTypes.default.func
+  checkItem: _propTypes.default.func,
+  deleteItem: _propTypes.default.func
 };
 var _default = List;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","/components/item":"components/item/index.js","prop-types":"../node_modules/prop-types/index.js","./style.scss":"components/list/style.scss"}],"components/app/style.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","/components/item":"components/item/index.js","/components/print":"components/print/index.js","prop-types":"../node_modules/prop-types/index.js","./style.scss":"components/list/style.scss"}],"../node_modules/react-share/es/hocs/createIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createIcon;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = void 0 && (void 0).__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+function createIcon(iconConfig) {
+  var Icon = function Icon(_a) {
+    var bgStyle = _a.bgStyle,
+        borderRadius = _a.borderRadius,
+        iconFillColor = _a.iconFillColor,
+        round = _a.round,
+        size = _a.size,
+        rest = __rest(_a, ["bgStyle", "borderRadius", "iconFillColor", "round", "size"]);
+
+    return _react.default.createElement("svg", __assign({
+      viewBox: "0 0 64 64",
+      width: size,
+      height: size
+    }, rest), round ? _react.default.createElement("circle", {
+      cx: "32",
+      cy: "32",
+      r: "31",
+      fill: iconConfig.color,
+      style: bgStyle
+    }) : _react.default.createElement("rect", {
+      width: "64",
+      height: "64",
+      rx: borderRadius,
+      ry: borderRadius,
+      fill: iconConfig.color,
+      style: bgStyle
+    }), _react.default.createElement("path", {
+      d: iconConfig.path,
+      fill: iconFillColor
+    }));
+  };
+
+  Icon.defaultProps = {
+    bgStyle: {},
+    borderRadius: 0,
+    iconFillColor: 'white',
+    size: 64
+  };
+  return Icon;
+}
+},{"react":"../node_modules/react/index.js"}],"../node_modules/react-share/es/EmailIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EmailIcon = (0, _createIcon.default)({
+  color: '#7f7f7f',
+  networkName: 'email',
+  path: 'M17,22v20h30V22H17z M41.1,25L32,32.1L22.9,25H41.1z M20,39V26.6l12,9.3l12-9.3V39H20z'
+});
+var _default = EmailIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/utils/objectToGetParams.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = objectToGetParams;
+
+function objectToGetParams(object) {
+  var params = Object.entries(object).filter(function (_a) {
+    var value = _a[1];
+    return value !== undefined && value !== null;
+  }).map(function (_a) {
+    var key = _a[0],
+        value = _a[1];
+    return encodeURIComponent(key) + "=" + encodeURIComponent(String(value));
+  });
+  return params.length > 0 ? "?" + params.join('&') : '';
+}
+},{}],"../node_modules/classnames/index.js":[function(require,module,exports) {
+var define;
+/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		// register as 'classnames', consistent with npm package name
+		define('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+},{}],"../node_modules/react-share/es/ShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var __extends = void 0 && (void 0).__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (b.hasOwnProperty(p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function sent() {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) {
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+
+          case 4:
+            _.label++;
+            return {
+              value: op[1],
+              done: false
+            };
+
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+
+          case 7:
+            op = _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+
+              _.ops.push(op);
+
+              break;
+            }
+
+            if (t[2]) _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+        }
+
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
+var __rest = void 0 && (void 0).__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+var isPromise = function isPromise(obj) {
+  return !!obj && (_typeof(obj) === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+};
+
+var getBoxPositionOnWindowCenter = function getBoxPositionOnWindowCenter(width, height) {
+  return {
+    left: window.outerWidth / 2 + (window.screenX || window.screenLeft || 0) - width / 2,
+    top: window.outerHeight / 2 + (window.screenY || window.screenTop || 0) - height / 2
+  };
+};
+
+var getBoxPositionOnScreenCenter = function getBoxPositionOnScreenCenter(width, height) {
+  return {
+    top: (window.screen.height - height) / 2,
+    left: (window.screen.width - width) / 2
+  };
+};
+
+function windowOpen(url, _a, onClose) {
+  var height = _a.height,
+      width = _a.width,
+      configRest = __rest(_a, ["height", "width"]);
+
+  var config = __assign({
+    height: height,
+    width: width,
+    location: 'no',
+    toolbar: 'no',
+    status: 'no',
+    directories: 'no',
+    menubar: 'no',
+    scrollbars: 'yes',
+    resizable: 'no',
+    centerscreen: 'yes',
+    chrome: 'yes'
+  }, configRest);
+
+  var shareDialog = window.open(url, '', Object.keys(config).map(function (key) {
+    return key + "=" + config[key];
+  }).join(', '));
+
+  if (onClose) {
+    var interval_1 = window.setInterval(function () {
+      try {
+        if (shareDialog === null || shareDialog.closed) {
+          window.clearInterval(interval_1);
+          onClose(shareDialog);
+        }
+      } catch (e) {
+        /* eslint-disable no-console */
+        console.error(e);
+        /* eslint-enable no-console */
+      }
+    }, 1000);
+  }
+
+  return shareDialog;
+}
+
+var ShareButton =
+/** @class */
+function (_super) {
+  __extends(ShareButton, _super);
+
+  function ShareButton() {
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+
+    _this.openShareDialog = function (link) {
+      var _a = _this.props,
+          onShareWindowClose = _a.onShareWindowClose,
+          _b = _a.windowHeight,
+          windowHeight = _b === void 0 ? 400 : _b,
+          _c = _a.windowPosition,
+          windowPosition = _c === void 0 ? 'windowCenter' : _c,
+          _d = _a.windowWidth,
+          windowWidth = _d === void 0 ? 550 : _d;
+
+      var windowConfig = __assign({
+        height: windowHeight,
+        width: windowWidth
+      }, windowPosition === 'windowCenter' ? getBoxPositionOnWindowCenter(windowWidth, windowHeight) : getBoxPositionOnScreenCenter(windowWidth, windowHeight));
+
+      windowOpen(link, windowConfig, onShareWindowClose);
+    };
+
+    _this.handleClick = function (e) {
+      return __awaiter(_this, void 0, void 0, function () {
+        var _a, beforeOnClick, disabled, networkLink, onClick, url, openShareDialogOnClick, opts, link, returnVal;
+
+        return __generator(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              _a = this.props, beforeOnClick = _a.beforeOnClick, disabled = _a.disabled, networkLink = _a.networkLink, onClick = _a.onClick, url = _a.url, openShareDialogOnClick = _a.openShareDialogOnClick, opts = _a.opts;
+              link = networkLink(url, opts);
+
+              if (disabled) {
+                return [2
+                /*return*/
+                ];
+              }
+
+              e.preventDefault();
+              if (!beforeOnClick) return [3
+              /*break*/
+              , 2];
+              returnVal = beforeOnClick();
+              if (!isPromise(returnVal)) return [3
+              /*break*/
+              , 2];
+              return [4
+              /*yield*/
+              , returnVal];
+
+            case 1:
+              _b.sent();
+
+              _b.label = 2;
+
+            case 2:
+              if (openShareDialogOnClick) {
+                this.openShareDialog(link);
+              }
+
+              if (onClick) {
+                onClick(e, link);
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    };
+
+    return _this;
+  }
+
+  ShareButton.prototype.render = function () {
+    var _a = this.props,
+        beforeOnClick = _a.beforeOnClick,
+        children = _a.children,
+        className = _a.className,
+        disabled = _a.disabled,
+        disabledStyle = _a.disabledStyle,
+        forwardedRef = _a.forwardedRef,
+        networkLink = _a.networkLink,
+        networkName = _a.networkName,
+        onShareWindowClose = _a.onShareWindowClose,
+        openShareDialogOnClick = _a.openShareDialogOnClick,
+        opts = _a.opts,
+        resetButtonStyle = _a.resetButtonStyle,
+        style = _a.style,
+        url = _a.url,
+        windowHeight = _a.windowHeight,
+        windowPosition = _a.windowPosition,
+        windowWidth = _a.windowWidth,
+        rest = __rest(_a, ["beforeOnClick", "children", "className", "disabled", "disabledStyle", "forwardedRef", "networkLink", "networkName", "onShareWindowClose", "openShareDialogOnClick", "opts", "resetButtonStyle", "style", "url", "windowHeight", "windowPosition", "windowWidth"]);
+
+    var newClassName = (0, _classnames.default)('react-share__ShareButton', {
+      'react-share__ShareButton--disabled': !!disabled,
+      disabled: !!disabled
+    }, className);
+    var newStyle = resetButtonStyle ? __assign(__assign({
+      backgroundColor: 'transparent',
+      border: 'none',
+      padding: 0,
+      font: 'inherit',
+      color: 'inherit',
+      cursor: 'pointer'
+    }, style), disabled && disabledStyle) : __assign(__assign({}, style), disabled && disabledStyle);
+    return _react.default.createElement("button", __assign({}, rest, {
+      "aria-label": rest['aria-label'] || networkName,
+      className: newClassName,
+      onClick: this.handleClick,
+      ref: forwardedRef,
+      style: newStyle
+    }), children);
+  };
+
+  ShareButton.defaultProps = {
+    disabledStyle: {
+      opacity: 0.6
+    },
+    openShareDialogOnClick: true,
+    resetButtonStyle: true
+  };
+  return ShareButton;
+}(_react.Component);
+
+var _default = ShareButton;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","classnames":"../node_modules/classnames/index.js"}],"../node_modules/react-share/es/hocs/createShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _ShareButton = _interopRequireDefault(require("../ShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+function createShareButton(networkName, link, optsMap, defaultProps) {
+  function CreatedButton(props, ref) {
+    return _react.default.createElement(_ShareButton.default, __assign({}, defaultProps, props, {
+      forwardedRef: ref,
+      networkName: networkName,
+      networkLink: link,
+      opts: optsMap(props)
+    }));
+  }
+
+  CreatedButton.displayName = "ShareButton-" + networkName;
+  return (0, _react.forwardRef)(CreatedButton);
+}
+
+var _default = createShareButton;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../ShareButton":"../node_modules/react-share/es/ShareButton.js"}],"../node_modules/react-share/es/EmailShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function emailLink(url, _a) {
+  var subject = _a.subject,
+      body = _a.body,
+      separator = _a.separator;
+  return 'mailto:' + (0, _objectToGetParams.default)({
+    subject: subject,
+    body: body ? body + separator + url : url
+  });
+}
+
+var EmailShareButton = (0, _createShareButton.default)('email', emailLink, function (props) {
+  return {
+    subject: props.subject,
+    body: props.body,
+    separator: props.separator
+  };
+}, {
+  separator: ' ',
+  openShareDialogOnClick: false,
+  onClick: function onClick(_, link) {
+    window.location.href = link;
+  }
+});
+var _default = EmailShareButton;
+exports.default = _default;
+},{"./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/FacebookIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FacebookIcon = (0, _createIcon.default)({
+  color: '#3b5998',
+  networkName: 'facebook',
+  path: 'M34.1,47V33.3h4.6l0.7-5.3h-5.3v-3.4c0-1.5,0.4-2.6,2.6-2.6l2.8,0v-4.8c-0.5-0.1-2.2-0.2-4.1-0.2 c-4.1,0-6.9,2.5-6.9,7V28H24v5.3h4.6V47H34.1z'
+});
+var _default = FacebookIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/FacebookMessengerIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FacebookMessengerIcon = (0, _createIcon.default)({
+  color: '#2196F3',
+  networkName: 'facebookmessenger',
+  path: 'M 53.066406 21.871094 C 52.667969 21.339844 51.941406 21.179688 51.359375 21.496094 L 37.492188 29.058594 L 28.867188 21.660156 C 28.339844 21.207031 27.550781 21.238281 27.054688 21.730469 L 11.058594 37.726562 C 10.539062 38.25 10.542969 39.09375 11.0625 39.613281 C 11.480469 40.027344 12.121094 40.121094 12.640625 39.839844 L 26.503906 32.28125 L 35.136719 39.679688 C 35.667969 40.132812 36.457031 40.101562 36.949219 39.609375 L 52.949219 23.613281 C 53.414062 23.140625 53.464844 22.398438 53.066406 21.871094 Z M 53.066406 21.871094'
+});
+var _default = FacebookMessengerIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/FacebookMessengerShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function facebookMessengerLink(url, _a) {
+  var appId = _a.appId,
+      redirectUri = _a.redirectUri,
+      to = _a.to;
+  return 'https://www.facebook.com/dialog/send' + (0, _objectToGetParams.default)({
+    link: url,
+    redirect_uri: redirectUri || url,
+    app_id: appId,
+    to: to
+  });
+}
+
+var FacebookMessengerShareButton = (0, _createShareButton.default)('facebookmessenger', facebookMessengerLink, function (props) {
+  return {
+    appId: props.appId,
+    redirectUri: props.redirectUri,
+    to: props.to
+  };
+}, {
+  windowWidth: 1000,
+  windowHeight: 820
+});
+var _default = FacebookMessengerShareButton;
+exports.default = _default;
+},{"./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/assert/node_modules/util/support/isBufferBrowser.js":[function(require,module,exports) {
+module.exports = function isBuffer(arg) {
+  return arg && typeof arg === 'object'
+    && typeof arg.copy === 'function'
+    && typeof arg.fill === 'function'
+    && typeof arg.readUInt8 === 'function';
+}
+},{}],"../node_modules/assert/node_modules/inherits/inherits_browser.js":[function(require,module,exports) {
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+},{}],"../node_modules/process/browser.js":[function(require,module,exports) {
+
+// shim for using process in browser
+var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+  throw new Error('setTimeout has not been defined');
+}
+
+function defaultClearTimeout() {
+  throw new Error('clearTimeout has not been defined');
+}
+
+(function () {
+  try {
+    if (typeof setTimeout === 'function') {
+      cachedSetTimeout = setTimeout;
+    } else {
+      cachedSetTimeout = defaultSetTimout;
+    }
+  } catch (e) {
+    cachedSetTimeout = defaultSetTimout;
+  }
+
+  try {
+    if (typeof clearTimeout === 'function') {
+      cachedClearTimeout = clearTimeout;
+    } else {
+      cachedClearTimeout = defaultClearTimeout;
+    }
+  } catch (e) {
+    cachedClearTimeout = defaultClearTimeout;
+  }
+})();
+
+function runTimeout(fun) {
+  if (cachedSetTimeout === setTimeout) {
+    //normal enviroments in sane situations
+    return setTimeout(fun, 0);
+  } // if setTimeout wasn't available but was latter defined
+
+
+  if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+    cachedSetTimeout = setTimeout;
+    return setTimeout(fun, 0);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedSetTimeout(fun, 0);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+      return cachedSetTimeout.call(null, fun, 0);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+      return cachedSetTimeout.call(this, fun, 0);
+    }
+  }
+}
+
+function runClearTimeout(marker) {
+  if (cachedClearTimeout === clearTimeout) {
+    //normal enviroments in sane situations
+    return clearTimeout(marker);
+  } // if clearTimeout wasn't available but was latter defined
+
+
+  if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+    cachedClearTimeout = clearTimeout;
+    return clearTimeout(marker);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedClearTimeout(marker);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+      return cachedClearTimeout.call(null, marker);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+      // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+      return cachedClearTimeout.call(this, marker);
+    }
+  }
+}
+
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+  if (!draining || !currentQueue) {
+    return;
+  }
+
+  draining = false;
+
+  if (currentQueue.length) {
+    queue = currentQueue.concat(queue);
+  } else {
+    queueIndex = -1;
+  }
+
+  if (queue.length) {
+    drainQueue();
+  }
+}
+
+function drainQueue() {
+  if (draining) {
+    return;
+  }
+
+  var timeout = runTimeout(cleanUpNextTick);
+  draining = true;
+  var len = queue.length;
+
+  while (len) {
+    currentQueue = queue;
+    queue = [];
+
+    while (++queueIndex < len) {
+      if (currentQueue) {
+        currentQueue[queueIndex].run();
+      }
+    }
+
+    queueIndex = -1;
+    len = queue.length;
+  }
+
+  currentQueue = null;
+  draining = false;
+  runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+  var args = new Array(arguments.length - 1);
+
+  if (arguments.length > 1) {
+    for (var i = 1; i < arguments.length; i++) {
+      args[i - 1] = arguments[i];
+    }
+  }
+
+  queue.push(new Item(fun, args));
+
+  if (queue.length === 1 && !draining) {
+    runTimeout(drainQueue);
+  }
+}; // v8 likes predictible objects
+
+
+function Item(fun, array) {
+  this.fun = fun;
+  this.array = array;
+}
+
+Item.prototype.run = function () {
+  this.fun.apply(null, this.array);
+};
+
+process.title = 'browser';
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) {
+  return [];
+};
+
+process.binding = function (name) {
+  throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () {
+  return '/';
+};
+
+process.chdir = function (dir) {
+  throw new Error('process.chdir is not supported');
+};
+
+process.umask = function () {
+  return 0;
+};
+},{}],"../node_modules/assert/node_modules/util/util.js":[function(require,module,exports) {
+var global = arguments[3];
+var process = require("process");
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+var formatRegExp = /%[sdj%]/g;
+
+exports.format = function (f) {
+  if (!isString(f)) {
+    var objects = [];
+
+    for (var i = 0; i < arguments.length; i++) {
+      objects.push(inspect(arguments[i]));
+    }
+
+    return objects.join(' ');
+  }
+
+  var i = 1;
+  var args = arguments;
+  var len = args.length;
+  var str = String(f).replace(formatRegExp, function (x) {
+    if (x === '%%') return '%';
+    if (i >= len) return x;
+
+    switch (x) {
+      case '%s':
+        return String(args[i++]);
+
+      case '%d':
+        return Number(args[i++]);
+
+      case '%j':
+        try {
+          return JSON.stringify(args[i++]);
+        } catch (_) {
+          return '[Circular]';
+        }
+
+      default:
+        return x;
+    }
+  });
+
+  for (var x = args[i]; i < len; x = args[++i]) {
+    if (isNull(x) || !isObject(x)) {
+      str += ' ' + x;
+    } else {
+      str += ' ' + inspect(x);
+    }
+  }
+
+  return str;
+}; // Mark that a method should not be used.
+// Returns a modified function which warns once by default.
+// If --no-deprecation is set, then it is a no-op.
+
+
+exports.deprecate = function (fn, msg) {
+  // Allow for deprecating things in the process of starting up.
+  if (isUndefined(global.process)) {
+    return function () {
+      return exports.deprecate(fn, msg).apply(this, arguments);
+    };
+  }
+
+  if (process.noDeprecation === true) {
+    return fn;
+  }
+
+  var warned = false;
+
+  function deprecated() {
+    if (!warned) {
+      if (process.throwDeprecation) {
+        throw new Error(msg);
+      } else if (process.traceDeprecation) {
+        console.trace(msg);
+      } else {
+        console.error(msg);
+      }
+
+      warned = true;
+    }
+
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
+
+var debugs = {};
+var debugEnviron;
+
+exports.debuglog = function (set) {
+  if (isUndefined(debugEnviron)) debugEnviron = undefined || '';
+  set = set.toUpperCase();
+
+  if (!debugs[set]) {
+    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+      var pid = process.pid;
+
+      debugs[set] = function () {
+        var msg = exports.format.apply(exports, arguments);
+        console.error('%s %d: %s', set, pid, msg);
+      };
+    } else {
+      debugs[set] = function () {};
+    }
+  }
+
+  return debugs[set];
+};
+/**
+ * Echos the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
+ */
+
+/* legacy: obj, showHidden, depth, colors*/
+
+
+function inspect(obj, opts) {
+  // default options
+  var ctx = {
+    seen: [],
+    stylize: stylizeNoColor
+  }; // legacy...
+
+  if (arguments.length >= 3) ctx.depth = arguments[2];
+  if (arguments.length >= 4) ctx.colors = arguments[3];
+
+  if (isBoolean(opts)) {
+    // legacy...
+    ctx.showHidden = opts;
+  } else if (opts) {
+    // got an "options" object
+    exports._extend(ctx, opts);
+  } // set default options
+
+
+  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+  if (isUndefined(ctx.depth)) ctx.depth = 2;
+  if (isUndefined(ctx.colors)) ctx.colors = false;
+  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+  if (ctx.colors) ctx.stylize = stylizeWithColor;
+  return formatValue(ctx, obj, ctx.depth);
+}
+
+exports.inspect = inspect; // http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+
+inspect.colors = {
+  'bold': [1, 22],
+  'italic': [3, 23],
+  'underline': [4, 24],
+  'inverse': [7, 27],
+  'white': [37, 39],
+  'grey': [90, 39],
+  'black': [30, 39],
+  'blue': [34, 39],
+  'cyan': [36, 39],
+  'green': [32, 39],
+  'magenta': [35, 39],
+  'red': [31, 39],
+  'yellow': [33, 39]
+}; // Don't use 'blue' not visible on cmd.exe
+
+inspect.styles = {
+  'special': 'cyan',
+  'number': 'yellow',
+  'boolean': 'yellow',
+  'undefined': 'grey',
+  'null': 'bold',
+  'string': 'green',
+  'date': 'magenta',
+  // "name": intentionally not styling
+  'regexp': 'red'
+};
+
+function stylizeWithColor(str, styleType) {
+  var style = inspect.styles[styleType];
+
+  if (style) {
+    return '\u001b[' + inspect.colors[style][0] + 'm' + str + '\u001b[' + inspect.colors[style][1] + 'm';
+  } else {
+    return str;
+  }
+}
+
+function stylizeNoColor(str, styleType) {
+  return str;
+}
+
+function arrayToHash(array) {
+  var hash = {};
+  array.forEach(function (val, idx) {
+    hash[val] = true;
+  });
+  return hash;
+}
+
+function formatValue(ctx, value, recurseTimes) {
+  // Provide a hook for user-specified inspect functions.
+  // Check that value is an object with an inspect function on it
+  if (ctx.customInspect && value && isFunction(value.inspect) && // Filter out the util module, it's inspect function is special
+  value.inspect !== exports.inspect && // Also filter out any prototype objects using the circular check.
+  !(value.constructor && value.constructor.prototype === value)) {
+    var ret = value.inspect(recurseTimes, ctx);
+
+    if (!isString(ret)) {
+      ret = formatValue(ctx, ret, recurseTimes);
+    }
+
+    return ret;
+  } // Primitive types cannot have properties
+
+
+  var primitive = formatPrimitive(ctx, value);
+
+  if (primitive) {
+    return primitive;
+  } // Look up the keys of the object.
+
+
+  var keys = Object.keys(value);
+  var visibleKeys = arrayToHash(keys);
+
+  if (ctx.showHidden) {
+    keys = Object.getOwnPropertyNames(value);
+  } // IE doesn't make error fields non-enumerable
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+
+
+  if (isError(value) && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+    return formatError(value);
+  } // Some type of object without properties can be shortcutted.
+
+
+  if (keys.length === 0) {
+    if (isFunction(value)) {
+      var name = value.name ? ': ' + value.name : '';
+      return ctx.stylize('[Function' + name + ']', 'special');
+    }
+
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    }
+
+    if (isDate(value)) {
+      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+    }
+
+    if (isError(value)) {
+      return formatError(value);
+    }
+  }
+
+  var base = '',
+      array = false,
+      braces = ['{', '}']; // Make Array say that they are Array
+
+  if (isArray(value)) {
+    array = true;
+    braces = ['[', ']'];
+  } // Make functions say that they are functions
+
+
+  if (isFunction(value)) {
+    var n = value.name ? ': ' + value.name : '';
+    base = ' [Function' + n + ']';
+  } // Make RegExps say that they are RegExps
+
+
+  if (isRegExp(value)) {
+    base = ' ' + RegExp.prototype.toString.call(value);
+  } // Make dates with properties first say the date
+
+
+  if (isDate(value)) {
+    base = ' ' + Date.prototype.toUTCString.call(value);
+  } // Make error with message first say the error
+
+
+  if (isError(value)) {
+    base = ' ' + formatError(value);
+  }
+
+  if (keys.length === 0 && (!array || value.length == 0)) {
+    return braces[0] + base + braces[1];
+  }
+
+  if (recurseTimes < 0) {
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    } else {
+      return ctx.stylize('[Object]', 'special');
+    }
+  }
+
+  ctx.seen.push(value);
+  var output;
+
+  if (array) {
+    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+  } else {
+    output = keys.map(function (key) {
+      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+    });
+  }
+
+  ctx.seen.pop();
+  return reduceToSingleString(output, base, braces);
+}
+
+function formatPrimitive(ctx, value) {
+  if (isUndefined(value)) return ctx.stylize('undefined', 'undefined');
+
+  if (isString(value)) {
+    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '').replace(/'/g, "\\'").replace(/\\"/g, '"') + '\'';
+    return ctx.stylize(simple, 'string');
+  }
+
+  if (isNumber(value)) return ctx.stylize('' + value, 'number');
+  if (isBoolean(value)) return ctx.stylize('' + value, 'boolean'); // For some reason typeof null is "object", so special case here.
+
+  if (isNull(value)) return ctx.stylize('null', 'null');
+}
+
+function formatError(value) {
+  return '[' + Error.prototype.toString.call(value) + ']';
+}
+
+function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+  var output = [];
+
+  for (var i = 0, l = value.length; i < l; ++i) {
+    if (hasOwnProperty(value, String(i))) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys, String(i), true));
+    } else {
+      output.push('');
+    }
+  }
+
+  keys.forEach(function (key) {
+    if (!key.match(/^\d+$/)) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys, key, true));
+    }
+  });
+  return output;
+}
+
+function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+  var name, str, desc;
+  desc = Object.getOwnPropertyDescriptor(value, key) || {
+    value: value[key]
+  };
+
+  if (desc.get) {
+    if (desc.set) {
+      str = ctx.stylize('[Getter/Setter]', 'special');
+    } else {
+      str = ctx.stylize('[Getter]', 'special');
+    }
+  } else {
+    if (desc.set) {
+      str = ctx.stylize('[Setter]', 'special');
+    }
+  }
+
+  if (!hasOwnProperty(visibleKeys, key)) {
+    name = '[' + key + ']';
+  }
+
+  if (!str) {
+    if (ctx.seen.indexOf(desc.value) < 0) {
+      if (isNull(recurseTimes)) {
+        str = formatValue(ctx, desc.value, null);
+      } else {
+        str = formatValue(ctx, desc.value, recurseTimes - 1);
+      }
+
+      if (str.indexOf('\n') > -1) {
+        if (array) {
+          str = str.split('\n').map(function (line) {
+            return '  ' + line;
+          }).join('\n').substr(2);
+        } else {
+          str = '\n' + str.split('\n').map(function (line) {
+            return '   ' + line;
+          }).join('\n');
+        }
+      }
+    } else {
+      str = ctx.stylize('[Circular]', 'special');
+    }
+  }
+
+  if (isUndefined(name)) {
+    if (array && key.match(/^\d+$/)) {
+      return str;
+    }
+
+    name = JSON.stringify('' + key);
+
+    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+      name = name.substr(1, name.length - 2);
+      name = ctx.stylize(name, 'name');
+    } else {
+      name = name.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, 'string');
+    }
+  }
+
+  return name + ': ' + str;
+}
+
+function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
+  var length = output.reduce(function (prev, cur) {
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+  }, 0);
+
+  if (length > 60) {
+    return braces[0] + (base === '' ? '' : base + '\n ') + ' ' + output.join(',\n  ') + ' ' + braces[1];
+  }
+
+  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+} // NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+
+
+function isArray(ar) {
+  return Array.isArray(ar);
+}
+
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return isObject(re) && objectToString(re) === '[object RegExp]';
+}
+
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+
+exports.isObject = isObject;
+
+function isDate(d) {
+  return isObject(d) && objectToString(d) === '[object Date]';
+}
+
+exports.isDate = isDate;
+
+function isError(e) {
+  return isObject(e) && (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null || typeof arg === 'boolean' || typeof arg === 'number' || typeof arg === 'string' || typeof arg === 'symbol' || // ES6 symbol
+  typeof arg === 'undefined';
+}
+
+exports.isPrimitive = isPrimitive;
+exports.isBuffer = require('./support/isBuffer');
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; // 26 Feb 16:19:34
+
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()), pad(d.getMinutes()), pad(d.getSeconds())].join(':');
+  return [d.getDate(), months[d.getMonth()], time].join(' ');
+} // log is just a thin wrapper to console.log that prepends a timestamp
+
+
+exports.log = function () {
+  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+};
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
+ */
+
+
+exports.inherits = require('inherits');
+
+exports._extend = function (origin, add) {
+  // Don't do anything if add isn't an object
+  if (!add || !isObject(add)) return origin;
+  var keys = Object.keys(add);
+  var i = keys.length;
+
+  while (i--) {
+    origin[keys[i]] = add[keys[i]];
+  }
+
+  return origin;
+};
+
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+},{"./support/isBuffer":"../node_modules/assert/node_modules/util/support/isBufferBrowser.js","inherits":"../node_modules/assert/node_modules/inherits/inherits_browser.js","process":"../node_modules/process/browser.js"}],"../node_modules/assert/assert.js":[function(require,module,exports) {
+var global = arguments[3];
+'use strict';
+
+var objectAssign = require('object-assign');
+
+// compare and isBuffer taken from https://github.com/feross/buffer/blob/680e9e5e488f22aac27599a57dc844a6315928dd/index.js
+// original notice:
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+function compare(a, b) {
+  if (a === b) {
+    return 0;
+  }
+
+  var x = a.length;
+  var y = b.length;
+
+  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+    if (a[i] !== b[i]) {
+      x = a[i];
+      y = b[i];
+      break;
+    }
+  }
+
+  if (x < y) {
+    return -1;
+  }
+  if (y < x) {
+    return 1;
+  }
+  return 0;
+}
+function isBuffer(b) {
+  if (global.Buffer && typeof global.Buffer.isBuffer === 'function') {
+    return global.Buffer.isBuffer(b);
+  }
+  return !!(b != null && b._isBuffer);
+}
+
+// based on node assert, original notice:
+// NB: The URL to the CommonJS spec is kept just for tradition.
+//     node-assert has evolved a lot since then, both in API and behavior.
+
+// http://wiki.commonjs.org/wiki/Unit_Testing/1.0
+//
+// THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
+//
+// Originally from narwhal.js (http://narwhaljs.org)
+// Copyright (c) 2009 Thomas Robinson <280north.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the 'Software'), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var util = require('util/');
+var hasOwn = Object.prototype.hasOwnProperty;
+var pSlice = Array.prototype.slice;
+var functionsHaveNames = (function () {
+  return function foo() {}.name === 'foo';
+}());
+function pToString (obj) {
+  return Object.prototype.toString.call(obj);
+}
+function isView(arrbuf) {
+  if (isBuffer(arrbuf)) {
+    return false;
+  }
+  if (typeof global.ArrayBuffer !== 'function') {
+    return false;
+  }
+  if (typeof ArrayBuffer.isView === 'function') {
+    return ArrayBuffer.isView(arrbuf);
+  }
+  if (!arrbuf) {
+    return false;
+  }
+  if (arrbuf instanceof DataView) {
+    return true;
+  }
+  if (arrbuf.buffer && arrbuf.buffer instanceof ArrayBuffer) {
+    return true;
+  }
+  return false;
+}
+// 1. The assert module provides functions that throw
+// AssertionError's when particular conditions are not met. The
+// assert module must conform to the following interface.
+
+var assert = module.exports = ok;
+
+// 2. The AssertionError is defined in assert.
+// new assert.AssertionError({ message: message,
+//                             actual: actual,
+//                             expected: expected })
+
+var regex = /\s*function\s+([^\(\s]*)\s*/;
+// based on https://github.com/ljharb/function.prototype.name/blob/adeeeec8bfcc6068b187d7d9fb3d5bb1d3a30899/implementation.js
+function getName(func) {
+  if (!util.isFunction(func)) {
+    return;
+  }
+  if (functionsHaveNames) {
+    return func.name;
+  }
+  var str = func.toString();
+  var match = str.match(regex);
+  return match && match[1];
+}
+assert.AssertionError = function AssertionError(options) {
+  this.name = 'AssertionError';
+  this.actual = options.actual;
+  this.expected = options.expected;
+  this.operator = options.operator;
+  if (options.message) {
+    this.message = options.message;
+    this.generatedMessage = false;
+  } else {
+    this.message = getMessage(this);
+    this.generatedMessage = true;
+  }
+  var stackStartFunction = options.stackStartFunction || fail;
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, stackStartFunction);
+  } else {
+    // non v8 browsers so we can have a stacktrace
+    var err = new Error();
+    if (err.stack) {
+      var out = err.stack;
+
+      // try to strip useless frames
+      var fn_name = getName(stackStartFunction);
+      var idx = out.indexOf('\n' + fn_name);
+      if (idx >= 0) {
+        // once we have located the function frame
+        // we need to strip out everything before it (and its line)
+        var next_line = out.indexOf('\n', idx + 1);
+        out = out.substring(next_line + 1);
+      }
+
+      this.stack = out;
+    }
+  }
+};
+
+// assert.AssertionError instanceof Error
+util.inherits(assert.AssertionError, Error);
+
+function truncate(s, n) {
+  if (typeof s === 'string') {
+    return s.length < n ? s : s.slice(0, n);
+  } else {
+    return s;
+  }
+}
+function inspect(something) {
+  if (functionsHaveNames || !util.isFunction(something)) {
+    return util.inspect(something);
+  }
+  var rawname = getName(something);
+  var name = rawname ? ': ' + rawname : '';
+  return '[Function' +  name + ']';
+}
+function getMessage(self) {
+  return truncate(inspect(self.actual), 128) + ' ' +
+         self.operator + ' ' +
+         truncate(inspect(self.expected), 128);
+}
+
+// At present only the three keys mentioned above are used and
+// understood by the spec. Implementations or sub modules can pass
+// other keys to the AssertionError's constructor - they will be
+// ignored.
+
+// 3. All of the following functions must throw an AssertionError
+// when a corresponding condition is not met, with a message that
+// may be undefined if not provided.  All assertion methods provide
+// both the actual and expected values to the assertion error for
+// display purposes.
+
+function fail(actual, expected, message, operator, stackStartFunction) {
+  throw new assert.AssertionError({
+    message: message,
+    actual: actual,
+    expected: expected,
+    operator: operator,
+    stackStartFunction: stackStartFunction
+  });
+}
+
+// EXTENSION! allows for well behaved errors defined elsewhere.
+assert.fail = fail;
+
+// 4. Pure assertion tests whether a value is truthy, as determined
+// by !!guard.
+// assert.ok(guard, message_opt);
+// This statement is equivalent to assert.equal(true, !!guard,
+// message_opt);. To test strictly for the value true, use
+// assert.strictEqual(true, guard, message_opt);.
+
+function ok(value, message) {
+  if (!value) fail(value, true, message, '==', assert.ok);
+}
+assert.ok = ok;
+
+// 5. The equality assertion tests shallow, coercive equality with
+// ==.
+// assert.equal(actual, expected, message_opt);
+
+assert.equal = function equal(actual, expected, message) {
+  if (actual != expected) fail(actual, expected, message, '==', assert.equal);
+};
+
+// 6. The non-equality assertion tests for whether two objects are not equal
+// with != assert.notEqual(actual, expected, message_opt);
+
+assert.notEqual = function notEqual(actual, expected, message) {
+  if (actual == expected) {
+    fail(actual, expected, message, '!=', assert.notEqual);
+  }
+};
+
+// 7. The equivalence assertion tests a deep equality relation.
+// assert.deepEqual(actual, expected, message_opt);
+
+assert.deepEqual = function deepEqual(actual, expected, message) {
+  if (!_deepEqual(actual, expected, false)) {
+    fail(actual, expected, message, 'deepEqual', assert.deepEqual);
+  }
+};
+
+assert.deepStrictEqual = function deepStrictEqual(actual, expected, message) {
+  if (!_deepEqual(actual, expected, true)) {
+    fail(actual, expected, message, 'deepStrictEqual', assert.deepStrictEqual);
+  }
+};
+
+function _deepEqual(actual, expected, strict, memos) {
+  // 7.1. All identical values are equivalent, as determined by ===.
+  if (actual === expected) {
+    return true;
+  } else if (isBuffer(actual) && isBuffer(expected)) {
+    return compare(actual, expected) === 0;
+
+  // 7.2. If the expected value is a Date object, the actual value is
+  // equivalent if it is also a Date object that refers to the same time.
+  } else if (util.isDate(actual) && util.isDate(expected)) {
+    return actual.getTime() === expected.getTime();
+
+  // 7.3 If the expected value is a RegExp object, the actual value is
+  // equivalent if it is also a RegExp object with the same source and
+  // properties (`global`, `multiline`, `lastIndex`, `ignoreCase`).
+  } else if (util.isRegExp(actual) && util.isRegExp(expected)) {
+    return actual.source === expected.source &&
+           actual.global === expected.global &&
+           actual.multiline === expected.multiline &&
+           actual.lastIndex === expected.lastIndex &&
+           actual.ignoreCase === expected.ignoreCase;
+
+  // 7.4. Other pairs that do not both pass typeof value == 'object',
+  // equivalence is determined by ==.
+  } else if ((actual === null || typeof actual !== 'object') &&
+             (expected === null || typeof expected !== 'object')) {
+    return strict ? actual === expected : actual == expected;
+
+  // If both values are instances of typed arrays, wrap their underlying
+  // ArrayBuffers in a Buffer each to increase performance
+  // This optimization requires the arrays to have the same type as checked by
+  // Object.prototype.toString (aka pToString). Never perform binary
+  // comparisons for Float*Arrays, though, since e.g. +0 === -0 but their
+  // bit patterns are not identical.
+  } else if (isView(actual) && isView(expected) &&
+             pToString(actual) === pToString(expected) &&
+             !(actual instanceof Float32Array ||
+               actual instanceof Float64Array)) {
+    return compare(new Uint8Array(actual.buffer),
+                   new Uint8Array(expected.buffer)) === 0;
+
+  // 7.5 For all other Object pairs, including Array objects, equivalence is
+  // determined by having the same number of owned properties (as verified
+  // with Object.prototype.hasOwnProperty.call), the same set of keys
+  // (although not necessarily the same order), equivalent values for every
+  // corresponding key, and an identical 'prototype' property. Note: this
+  // accounts for both named and indexed properties on Arrays.
+  } else if (isBuffer(actual) !== isBuffer(expected)) {
+    return false;
+  } else {
+    memos = memos || {actual: [], expected: []};
+
+    var actualIndex = memos.actual.indexOf(actual);
+    if (actualIndex !== -1) {
+      if (actualIndex === memos.expected.indexOf(expected)) {
+        return true;
+      }
+    }
+
+    memos.actual.push(actual);
+    memos.expected.push(expected);
+
+    return objEquiv(actual, expected, strict, memos);
+  }
+}
+
+function isArguments(object) {
+  return Object.prototype.toString.call(object) == '[object Arguments]';
+}
+
+function objEquiv(a, b, strict, actualVisitedObjects) {
+  if (a === null || a === undefined || b === null || b === undefined)
+    return false;
+  // if one is a primitive, the other must be same
+  if (util.isPrimitive(a) || util.isPrimitive(b))
+    return a === b;
+  if (strict && Object.getPrototypeOf(a) !== Object.getPrototypeOf(b))
+    return false;
+  var aIsArgs = isArguments(a);
+  var bIsArgs = isArguments(b);
+  if ((aIsArgs && !bIsArgs) || (!aIsArgs && bIsArgs))
+    return false;
+  if (aIsArgs) {
+    a = pSlice.call(a);
+    b = pSlice.call(b);
+    return _deepEqual(a, b, strict);
+  }
+  var ka = objectKeys(a);
+  var kb = objectKeys(b);
+  var key, i;
+  // having the same number of owned properties (keys incorporates
+  // hasOwnProperty)
+  if (ka.length !== kb.length)
+    return false;
+  //the same set of keys (although not necessarily the same order),
+  ka.sort();
+  kb.sort();
+  //~~~cheap key test
+  for (i = ka.length - 1; i >= 0; i--) {
+    if (ka[i] !== kb[i])
+      return false;
+  }
+  //equivalent values for every corresponding key, and
+  //~~~possibly expensive deep test
+  for (i = ka.length - 1; i >= 0; i--) {
+    key = ka[i];
+    if (!_deepEqual(a[key], b[key], strict, actualVisitedObjects))
+      return false;
+  }
+  return true;
+}
+
+// 8. The non-equivalence assertion tests for any deep inequality.
+// assert.notDeepEqual(actual, expected, message_opt);
+
+assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
+  if (_deepEqual(actual, expected, false)) {
+    fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
+  }
+};
+
+assert.notDeepStrictEqual = notDeepStrictEqual;
+function notDeepStrictEqual(actual, expected, message) {
+  if (_deepEqual(actual, expected, true)) {
+    fail(actual, expected, message, 'notDeepStrictEqual', notDeepStrictEqual);
+  }
+}
+
+
+// 9. The strict equality assertion tests strict equality, as determined by ===.
+// assert.strictEqual(actual, expected, message_opt);
+
+assert.strictEqual = function strictEqual(actual, expected, message) {
+  if (actual !== expected) {
+    fail(actual, expected, message, '===', assert.strictEqual);
+  }
+};
+
+// 10. The strict non-equality assertion tests for strict inequality, as
+// determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
+
+assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
+  if (actual === expected) {
+    fail(actual, expected, message, '!==', assert.notStrictEqual);
+  }
+};
+
+function expectedException(actual, expected) {
+  if (!actual || !expected) {
+    return false;
+  }
+
+  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
+    return expected.test(actual);
+  }
+
+  try {
+    if (actual instanceof expected) {
+      return true;
+    }
+  } catch (e) {
+    // Ignore.  The instanceof check doesn't work for arrow functions.
+  }
+
+  if (Error.isPrototypeOf(expected)) {
+    return false;
+  }
+
+  return expected.call({}, actual) === true;
+}
+
+function _tryBlock(block) {
+  var error;
+  try {
+    block();
+  } catch (e) {
+    error = e;
+  }
+  return error;
+}
+
+function _throws(shouldThrow, block, expected, message) {
+  var actual;
+
+  if (typeof block !== 'function') {
+    throw new TypeError('"block" argument must be a function');
+  }
+
+  if (typeof expected === 'string') {
+    message = expected;
+    expected = null;
+  }
+
+  actual = _tryBlock(block);
+
+  message = (expected && expected.name ? ' (' + expected.name + ').' : '.') +
+            (message ? ' ' + message : '.');
+
+  if (shouldThrow && !actual) {
+    fail(actual, expected, 'Missing expected exception' + message);
+  }
+
+  var userProvidedMessage = typeof message === 'string';
+  var isUnwantedException = !shouldThrow && util.isError(actual);
+  var isUnexpectedException = !shouldThrow && actual && !expected;
+
+  if ((isUnwantedException &&
+      userProvidedMessage &&
+      expectedException(actual, expected)) ||
+      isUnexpectedException) {
+    fail(actual, expected, 'Got unwanted exception' + message);
+  }
+
+  if ((shouldThrow && actual && expected &&
+      !expectedException(actual, expected)) || (!shouldThrow && actual)) {
+    throw actual;
+  }
+}
+
+// 11. Expected to throw an error:
+// assert.throws(block, Error_opt, message_opt);
+
+assert.throws = function(block, /*optional*/error, /*optional*/message) {
+  _throws(true, block, error, message);
+};
+
+// EXTENSION! This is annoying to write outside this module.
+assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
+  _throws(false, block, error, message);
+};
+
+assert.ifError = function(err) { if (err) throw err; };
+
+// Expose a strict only variant of assert
+function strict(value, message) {
+  if (!value) fail(value, true, message, '==', strict);
+}
+assert.strict = objectAssign(strict, assert, {
+  equal: assert.strictEqual,
+  deepEqual: assert.deepStrictEqual,
+  notEqual: assert.notStrictEqual,
+  notDeepEqual: assert.notDeepStrictEqual
+});
+assert.strict.strict = assert.strict;
+
+var objectKeys = Object.keys || function (obj) {
+  var keys = [];
+  for (var key in obj) {
+    if (hasOwn.call(obj, key)) keys.push(key);
+  }
+  return keys;
+};
+
+},{"object-assign":"../node_modules/object-assign/index.js","util/":"../node_modules/assert/node_modules/util/util.js"}],"../node_modules/react-share/es/FacebookShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function facebookLink(url, _a) {
+  var quote = _a.quote,
+      hashtag = _a.hashtag;
+  (0, _assert.default)(url, 'facebook.url');
+  return 'https://www.facebook.com/sharer/sharer.php' + (0, _objectToGetParams.default)({
+    u: url,
+    quote: quote,
+    hashtag: hashtag
+  });
+}
+
+var FacebookShareButton = (0, _createShareButton.default)('facebook', facebookLink, function (props) {
+  return {
+    quote: props.quote,
+    hashtag: props.hashtag
+  };
+}, {
+  windowWidth: 550,
+  windowHeight: 400
+});
+var _default = FacebookShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/jsonp/node_modules/ms/index.js":[function(require,module,exports) {
+/**
+ * Helpers.
+ */
+
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} [options]
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function(val, options) {
+  options = options || {};
+  var type = typeof val;
+  if (type === 'string' && val.length > 0) {
+    return parse(val);
+  } else if (type === 'number' && isNaN(val) === false) {
+    return options.long ? fmtLong(val) : fmtShort(val);
+  }
+  throw new Error(
+    'val is not a non-empty string or a valid number. val=' +
+      JSON.stringify(val)
+  );
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str);
+  if (str.length > 100) {
+    return;
+  }
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+    str
+  );
+  if (!match) {
+    return;
+  }
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s;
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  if (ms >= d) {
+    return Math.round(ms / d) + 'd';
+  }
+  if (ms >= h) {
+    return Math.round(ms / h) + 'h';
+  }
+  if (ms >= m) {
+    return Math.round(ms / m) + 'm';
+  }
+  if (ms >= s) {
+    return Math.round(ms / s) + 's';
+  }
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  return plural(ms, d, 'day') ||
+    plural(ms, h, 'hour') ||
+    plural(ms, m, 'minute') ||
+    plural(ms, s, 'second') ||
+    ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) {
+    return;
+  }
+  if (ms < n * 1.5) {
+    return Math.floor(ms / n) + ' ' + name;
+  }
+  return Math.ceil(ms / n) + ' ' + name + 's';
+}
+
+},{}],"../node_modules/jsonp/node_modules/debug/src/debug.js":[function(require,module,exports) {
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+exports.coerce = coerce;
+exports.disable = disable;
+exports.enable = enable;
+exports.enabled = enabled;
+exports.humanize = require('ms');
+
+/**
+ * The currently active debug mode names, and names to skip.
+ */
+
+exports.names = [];
+exports.skips = [];
+
+/**
+ * Map of special "%n" handling functions, for the debug "format" argument.
+ *
+ * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+ */
+
+exports.formatters = {};
+
+/**
+ * Previous log timestamp.
+ */
+
+var prevTime;
+
+/**
+ * Select a color.
+ * @param {String} namespace
+ * @return {Number}
+ * @api private
+ */
+
+function selectColor(namespace) {
+  var hash = 0, i;
+
+  for (i in namespace) {
+    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
+    hash |= 0; // Convert to 32bit integer
+  }
+
+  return exports.colors[Math.abs(hash) % exports.colors.length];
+}
+
+/**
+ * Create a debugger with the given `namespace`.
+ *
+ * @param {String} namespace
+ * @return {Function}
+ * @api public
+ */
+
+function createDebug(namespace) {
+
+  function debug() {
+    // disabled?
+    if (!debug.enabled) return;
+
+    var self = debug;
+
+    // set `diff` timestamp
+    var curr = +new Date();
+    var ms = curr - (prevTime || curr);
+    self.diff = ms;
+    self.prev = prevTime;
+    self.curr = curr;
+    prevTime = curr;
+
+    // turn the `arguments` into a proper Array
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+
+    args[0] = exports.coerce(args[0]);
+
+    if ('string' !== typeof args[0]) {
+      // anything else let's inspect with %O
+      args.unshift('%O');
+    }
+
+    // apply any `formatters` transformations
+    var index = 0;
+    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
+      // if we encounter an escaped % then don't increase the array index
+      if (match === '%%') return match;
+      index++;
+      var formatter = exports.formatters[format];
+      if ('function' === typeof formatter) {
+        var val = args[index];
+        match = formatter.call(self, val);
+
+        // now we need to remove `args[index]` since it's inlined in the `format`
+        args.splice(index, 1);
+        index--;
+      }
+      return match;
+    });
+
+    // apply env-specific formatting (colors, etc.)
+    exports.formatArgs.call(self, args);
+
+    var logFn = debug.log || exports.log || console.log.bind(console);
+    logFn.apply(self, args);
+  }
+
+  debug.namespace = namespace;
+  debug.enabled = exports.enabled(namespace);
+  debug.useColors = exports.useColors();
+  debug.color = selectColor(namespace);
+
+  // env-specific initialization logic for debug instances
+  if ('function' === typeof exports.init) {
+    exports.init(debug);
+  }
+
+  return debug;
+}
+
+/**
+ * Enables a debug mode by namespaces. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} namespaces
+ * @api public
+ */
+
+function enable(namespaces) {
+  exports.save(namespaces);
+
+  exports.names = [];
+  exports.skips = [];
+
+  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+  var len = split.length;
+
+  for (var i = 0; i < len; i++) {
+    if (!split[i]) continue; // ignore empty strings
+    namespaces = split[i].replace(/\*/g, '.*?');
+    if (namespaces[0] === '-') {
+      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+    } else {
+      exports.names.push(new RegExp('^' + namespaces + '$'));
+    }
+  }
+}
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+function disable() {
+  exports.enable('');
+}
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+function enabled(name) {
+  var i, len;
+  for (i = 0, len = exports.skips.length; i < len; i++) {
+    if (exports.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (i = 0, len = exports.names.length; i < len; i++) {
+    if (exports.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Coerce `val`.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function coerce(val) {
+  if (val instanceof Error) return val.stack || val.message;
+  return val;
+}
+
+},{"ms":"../node_modules/jsonp/node_modules/ms/index.js"}],"../node_modules/jsonp/node_modules/debug/src/browser.js":[function(require,module,exports) {
+var process = require("process");
+/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+exports = module.exports = require('./debug');
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome && 'undefined' != typeof chrome.storage ? chrome.storage.local : localstorage();
+/**
+ * Colors.
+ */
+
+exports.colors = ['lightseagreen', 'forestgreen', 'goldenrod', 'dodgerblue', 'darkorchid', 'crimson'];
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // NB: In an Electron preload script, document will be defined but not fully
+  // initialized. Since we know we're in Chrome, we'll just detect this case
+  // explicitly
+  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+    return true;
+  } // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+
+
+  return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance || // is firebug? http://stackoverflow.com/a/398120/376773
+  typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) || // is firefox >= v31?
+  // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+  typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 || // double check webkit in userAgent just in case we are in a worker
+  typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/);
+}
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+
+exports.formatters.j = function (v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+
+function formatArgs(args) {
+  var useColors = this.useColors;
+  args[0] = (useColors ? '%c' : '') + this.namespace + (useColors ? ' %c' : ' ') + args[0] + (useColors ? '%c ' : ' ') + '+' + exports.humanize(this.diff);
+  if (!useColors) return;
+  var c = 'color: ' + this.color;
+  args.splice(1, 0, c, 'color: inherit'); // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-zA-Z%]/g, function (match) {
+    if ('%%' === match) return;
+    index++;
+
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+  args.splice(lastC, 0, c);
+}
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console && console.log && Function.prototype.apply.call(console.log, console, arguments);
+}
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch (e) {}
+}
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+
+function load() {
+  var r;
+
+  try {
+    r = exports.storage.debug;
+  } catch (e) {} // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+
+
+  if (!r && typeof process !== 'undefined' && 'env' in process) {
+    r = undefined;
+  }
+
+  return r;
+}
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+
+exports.enable(load());
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+},{"./debug":"../node_modules/jsonp/node_modules/debug/src/debug.js","process":"../node_modules/process/browser.js"}],"../node_modules/jsonp/index.js":[function(require,module,exports) {
+/**
+ * Module dependencies
+ */
+
+var debug = require('debug')('jsonp');
+
+/**
+ * Module exports.
+ */
+
+module.exports = jsonp;
+
+/**
+ * Callback index.
+ */
+
+var count = 0;
+
+/**
+ * Noop function.
+ */
+
+function noop(){}
+
+/**
+ * JSONP handler
+ *
+ * Options:
+ *  - param {String} qs parameter (`callback`)
+ *  - prefix {String} qs parameter (`__jp`)
+ *  - name {String} qs parameter (`prefix` + incr)
+ *  - timeout {Number} how long after a timeout error is emitted (`60000`)
+ *
+ * @param {String} url
+ * @param {Object|Function} optional options / callback
+ * @param {Function} optional callback
+ */
+
+function jsonp(url, opts, fn){
+  if ('function' == typeof opts) {
+    fn = opts;
+    opts = {};
+  }
+  if (!opts) opts = {};
+
+  var prefix = opts.prefix || '__jp';
+
+  // use the callback name that was passed if one was provided.
+  // otherwise generate a unique name by incrementing our counter.
+  var id = opts.name || (prefix + (count++));
+
+  var param = opts.param || 'callback';
+  var timeout = null != opts.timeout ? opts.timeout : 60000;
+  var enc = encodeURIComponent;
+  var target = document.getElementsByTagName('script')[0] || document.head;
+  var script;
+  var timer;
+
+
+  if (timeout) {
+    timer = setTimeout(function(){
+      cleanup();
+      if (fn) fn(new Error('Timeout'));
+    }, timeout);
+  }
+
+  function cleanup(){
+    if (script.parentNode) script.parentNode.removeChild(script);
+    window[id] = noop;
+    if (timer) clearTimeout(timer);
+  }
+
+  function cancel(){
+    if (window[id]) {
+      cleanup();
+    }
+  }
+
+  window[id] = function(data){
+    debug('jsonp got', data);
+    cleanup();
+    if (fn) fn(null, data);
+  };
+
+  // add qs component
+  url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
+  url = url.replace('?&', '?');
+
+  debug('jsonp req "%s"', url);
+
+  // create script
+  script = document.createElement('script');
+  script.src = url;
+  target.parentNode.insertBefore(script, target);
+
+  return cancel;
+}
+
+},{"debug":"../node_modules/jsonp/node_modules/debug/src/browser.js"}],"../node_modules/react-share/es/hocs/createShareCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createShareCount;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var __extends = void 0 && (void 0).__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (b.hasOwnProperty(p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = void 0 && (void 0).__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+var defaultChildren = function defaultChildren(shareCount) {
+  return shareCount;
+};
+
+var SocialMediaShareCount =
+/** @class */
+function (_super) {
+  __extends(SocialMediaShareCount, _super);
+
+  function SocialMediaShareCount(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this._isMounted = false;
+    _this.state = {
+      count: 0,
+      isLoading: false
+    };
+    return _this;
+  }
+
+  SocialMediaShareCount.prototype.componentDidMount = function () {
+    this._isMounted = true;
+    this.updateCount(this.props.url);
+  };
+
+  SocialMediaShareCount.prototype.componentDidUpdate = function (prevProps) {
+    if (this.props.url !== prevProps.url) {
+      this.updateCount(this.props.url);
+    }
+  };
+
+  SocialMediaShareCount.prototype.componentWillUnmount = function () {
+    this._isMounted = false;
+  };
+
+  SocialMediaShareCount.prototype.updateCount = function (url) {
+    var _this = this;
+
+    this.setState({
+      isLoading: true
+    });
+    this.props.getCount(url, function (count) {
+      if (_this._isMounted) {
+        _this.setState({
+          count: count,
+          isLoading: false
+        });
+      }
+    });
+  };
+
+  SocialMediaShareCount.prototype.render = function () {
+    var _a = this.state,
+        count = _a.count,
+        isLoading = _a.isLoading;
+
+    var _b = this.props,
+        _c = _b.children,
+        children = _c === void 0 ? defaultChildren : _c,
+        className = _b.className,
+        _ = _b.getCount,
+        rest = __rest(_b, ["children", "className", "getCount"]);
+
+    return _react.default.createElement("span", __assign({
+      className: (0, _classnames.default)('react-share__ShareCount', className)
+    }, rest), !isLoading && count !== undefined && children(count));
+  };
+
+  return SocialMediaShareCount;
+}(_react.Component);
+
+function createShareCount(getCount) {
+  var ShareCount = function ShareCount(props) {
+    return _react.default.createElement(SocialMediaShareCount, __assign({
+      getCount: getCount
+    }, props));
+  };
+
+  ShareCount.displayName = "ShareCount(" + getCount.name + ")";
+  return ShareCount;
+}
+},{"react":"../node_modules/react/index.js","classnames":"../node_modules/classnames/index.js"}],"../node_modules/react-share/es/FacebookShareCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _jsonp = _interopRequireDefault(require("jsonp"));
+
+var _createShareCount = _interopRequireDefault(require("./hocs/createShareCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getFacebookShareCount(shareUrl, callback) {
+  var endpoint = "https://graph.facebook.com/?id=" + shareUrl + "&fields=og_object{engagement}";
+  (0, _jsonp.default)(endpoint, function (err, data) {
+    callback(!err && data && data.og_object && data.og_object.engagement ? data.og_object.engagement.count : undefined);
+  });
+}
+
+var _default = (0, _createShareCount.default)(getFacebookShareCount);
+
+exports.default = _default;
+},{"jsonp":"../node_modules/jsonp/index.js","./hocs/createShareCount":"../node_modules/react-share/es/hocs/createShareCount.js"}],"../node_modules/react-share/es/InstapaperIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var InstapaperIcon = (0, _createIcon.default)({
+  color: '#1F1F1F',
+  networkName: 'instapaper',
+  path: 'M35.688 43.012c0 2.425.361 2.785 3.912 3.056V48H24.401v-1.932c3.555-.27 3.912-.63 3.912-3.056V20.944c0-2.379-.36-2.785-3.912-3.056V16H39.6v1.888c-3.55.27-3.912.675-3.912 3.056v22.068h.001z'
+});
+var _default = InstapaperIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/InstapaperShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function instapaperLink(url, _a) {
+  var title = _a.title,
+      description = _a.description;
+  (0, _assert.default)(url, 'instapaper.url');
+  return 'http://www.instapaper.com/hello2' + (0, _objectToGetParams.default)({
+    url: url,
+    title: title,
+    description: description
+  });
+}
+
+var InstapaperShareButton = (0, _createShareButton.default)('instapaper', instapaperLink, function (props) {
+  return {
+    title: props.title,
+    description: props.description
+  };
+}, {
+  windowWidth: 500,
+  windowHeight: 500,
+  windowPosition: 'windowCenter'
+});
+var _default = InstapaperShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js"}],"../node_modules/react-share/es/LineIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LineIcon = (0, _createIcon.default)({
+  color: '#00b800',
+  networkName: 'line',
+  path: 'M52.62 30.138c0 3.693-1.432 7.019-4.42 10.296h.001c-4.326 4.979-14 11.044-16.201 11.972-2.2.927-1.876-.591-1.786-1.112l.294-1.765c.069-.527.142-1.343-.066-1.865-.232-.574-1.146-.872-1.817-1.016-9.909-1.31-17.245-8.238-17.245-16.51 0-9.226 9.251-16.733 20.62-16.733 11.37 0 20.62 7.507 20.62 16.733zM27.81 25.68h-1.446a.402.402 0 0 0-.402.401v8.985c0 .221.18.4.402.4h1.446a.401.401 0 0 0 .402-.4v-8.985a.402.402 0 0 0-.402-.401zm9.956 0H36.32a.402.402 0 0 0-.402.401v5.338L31.8 25.858a.39.39 0 0 0-.031-.04l-.002-.003-.024-.025-.008-.007a.313.313 0 0 0-.032-.026.255.255 0 0 1-.021-.014l-.012-.007-.021-.012-.013-.006-.023-.01-.013-.005-.024-.008-.014-.003-.023-.005-.017-.002-.021-.003-.021-.002h-1.46a.402.402 0 0 0-.402.401v8.985c0 .221.18.4.402.4h1.446a.401.401 0 0 0 .402-.4v-5.337l4.123 5.568c.028.04.063.072.101.099l.004.003a.236.236 0 0 0 .025.015l.012.006.019.01a.154.154 0 0 1 .019.008l.012.004.028.01.005.001a.442.442 0 0 0 .104.013h1.446a.4.4 0 0 0 .401-.4v-8.985a.402.402 0 0 0-.401-.401zm-13.442 7.537h-3.93v-7.136a.401.401 0 0 0-.401-.401h-1.447a.4.4 0 0 0-.401.401v8.984a.392.392 0 0 0 .123.29c.072.068.17.111.278.111h5.778a.4.4 0 0 0 .401-.401v-1.447a.401.401 0 0 0-.401-.401zm21.429-5.287c.222 0 .401-.18.401-.402v-1.446a.401.401 0 0 0-.401-.402h-5.778a.398.398 0 0 0-.279.113l-.005.004-.006.008a.397.397 0 0 0-.111.276v8.984c0 .108.043.206.112.278l.005.006a.401.401 0 0 0 .284.117h5.778a.4.4 0 0 0 .401-.401v-1.447a.401.401 0 0 0-.401-.401h-3.93v-1.519h3.93c.222 0 .401-.18.401-.402V29.85a.401.401 0 0 0-.401-.402h-3.93V27.93h3.93z'
+});
+var _default = LineIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/LineShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function lineLink(url, _a) {
+  var title = _a.title;
+  (0, _assert.default)(url, 'line.url');
+  return 'https://social-plugins.line.me/lineit/share' + (0, _objectToGetParams.default)({
+    url: url,
+    text: title
+  });
+}
+
+var LineShareButton = (0, _createShareButton.default)('line', lineLink, function (props) {
+  return {
+    title: props.title
+  };
+}, {
+  windowWidth: 500,
+  windowHeight: 500
+});
+var _default = LineShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js"}],"../node_modules/react-share/es/LinkedinIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LinkedinIcon = (0, _createIcon.default)({
+  color: '#007fb1',
+  networkName: 'linkedin',
+  path: 'M20.4,44h5.4V26.6h-5.4V44z M23.1,18c-1.7,0-3.1,1.4-3.1,3.1c0,1.7,1.4,3.1,3.1,3.1 c1.7,0,3.1-1.4,3.1-3.1C26.2,19.4,24.8,18,23.1,18z M39.5,26.2c-2.6,0-4.4,1.4-5.1,2.8h-0.1v-2.4h-5.2V44h5.4v-8.6 c0-2.3,0.4-4.5,3.2-4.5c2.8,0,2.8,2.6,2.8,4.6V44H46v-9.5C46,29.8,45,26.2,39.5,26.2z'
+});
+var _default = LinkedinIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/LinkedinShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function linkedinLink(url, _a) {
+  var title = _a.title,
+      summary = _a.summary,
+      source = _a.source;
+  (0, _assert.default)(url, 'linkedin.url');
+  return 'https://linkedin.com/shareArticle' + (0, _objectToGetParams.default)({
+    url: url,
+    mini: 'true',
+    title: title,
+    summary: summary,
+    source: source
+  });
+}
+
+var LinkedinShareButton = (0, _createShareButton.default)('linkedin', linkedinLink, function (_a) {
+  var title = _a.title,
+      summary = _a.summary,
+      source = _a.source;
+  return {
+    title: title,
+    summary: summary,
+    source: source
+  };
+}, {
+  windowWidth: 750,
+  windowHeight: 600
+});
+var _default = LinkedinShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/LivejournalIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LivejournalIcon = (0, _createIcon.default)({
+  color: '#21A5D8',
+  networkName: 'livejournal',
+  path: 'M18.3407821,28.1764706 L21.9441341,31.789916 L33.0055865,42.882353 C33.0055865,42.882353 33.0893855,42.9663866 33.0893855,42.9663866 L46.6648046,47 C46.6648046,47 46.6648046,47 46.7486034,47 C46.8324022,47 46.8324022,47 46.9162012,46.9159664 C47,46.8319327 47,46.8319327 47,46.7478991 L42.9776536,33.1344537 C42.9776536,33.1344537 42.9776536,33.1344537 42.8938548,33.0504202 L31.1620111,21.3697479 L31.1620111,21.3697479 L28.1452514,18.2605042 C27.3072626,17.4201681 26.5530726,17 25.7150838,17 C24.2905028,17 23.0335195,18.3445378 21.5251397,19.8571429 C21.273743,20.1092437 20.9385475,20.4453781 20.6871508,20.697479 C20.3519553,21.0336134 20.1005586,21.2857143 19.849162,21.5378151 C18.3407821,22.9663866 17.0837989,24.2268908 17,25.7394958 C17.0837989,26.4957983 17.5027933,27.3361345 18.3407821,28.1764706 Z M39.9012319,39.6134454 C39.7336341,39.4453781 39.4822374,37.6806724 40.2364275,36.8403362 C40.9906174,36.0840337 41.6610084,36 42.1638017,36 C42.3313995,36 42.4989973,36 42.5827961,36 L44.8453659,43.5630253 L43.5883828,44.8235295 L36.0464833,42.5546218 C35.9626843,42.2184874 35.8788855,41.2100841 36.8844722,40.2016807 C37.2196676,39.8655463 37.8900587,39.6134454 38.5604498,39.6134454 C39.147042,39.6134454 39.5660364,39.7815126 39.5660364,39.7815126 C39.6498353,39.8655463 39.8174331,39.8655463 39.8174331,39.7815126 C39.9850307,39.7815126 39.9850307,39.697479 39.9012319,39.6134454 Z'
+});
+var _default = LivejournalIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/LivejournalShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function livejournalLink(url, _a) {
+  var title = _a.title,
+      description = _a.description;
+  (0, _assert.default)(url, 'livejournal.url');
+  return 'https://www.livejournal.com/update.bml' + (0, _objectToGetParams.default)({
+    subject: title,
+    event: description
+  });
+}
+
+var LivejournalShareButton = (0, _createShareButton.default)('livejournal', livejournalLink, function (props) {
+  return {
+    title: props.title,
+    description: props.description
+  };
+}, {
+  windowWidth: 660,
+  windowHeight: 460
+});
+var _default = LivejournalShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/MailruIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MailruIcon = (0, _createIcon.default)({
+  color: '#168DE2',
+  networkName: 'mailru',
+  path: 'M39.7107745,17 C41.6619755,17 43.3204965,18.732852 43.3204965,21.0072202 C43.3204965,23.2815885 41.7595357,25.0144404 39.7107745,25.0144404 C37.7595732,25.0144404 36.1010522,23.2815885 36.1010522,21.0072202 C36.1010522,18.732852 37.7595732,17 39.7107745,17 Z M24.3938451,17 C26.3450463,17 28.0035672,18.732852 28.0035672,21.0072202 C28.0035672,23.2815885 26.4426063,25.0144404 24.3938451,25.0144404 C22.4426439,25.0144404 20.7841229,23.2815885 20.7841229,21.0072202 C20.7841229,18.732852 22.4426439,17 24.3938451,17 Z M51.9057817,43.4259928 C51.7106617,44.0758123 51.4179815,44.6173285 50.9301812,44.9422383 C50.637501,45.1588448 50.2472607,45.267148 49.8570205,45.267148 C49.07654,45.267148 48.3936197,44.833935 48.0033795,44.0758123 L46.2472985,40.7184115 L45.759498,41.2599278 C42.5400162,44.9422383 37.466893,47 32.0035297,47 C26.5401664,47 21.5646034,44.9422383 18.2475614,41.2599278 L17.7597611,40.7184115 L16.00368,44.0758123 C15.6134398,44.833935 14.9305194,45.267148 14.1500389,45.267148 C13.7597986,45.267148 13.3695584,45.1588448 13.0768782,44.9422383 C12.0037176,44.2924187 11.7110374,42.7761733 12.2963978,41.5848375 L16.7841605,33.0288807 C17.1744007,32.270758 17.8573211,31.8375453 18.6378016,31.8375453 C19.0280418,31.8375453 19.4182821,31.9458485 19.7109623,32.1624548 C20.7841229,32.8122743 21.0768031,34.3285197 20.4914427,35.5198555 L20.1012025,36.2779783 L20.2963226,36.602888 C22.4426439,39.9602888 27.0279667,42.234657 31.9059697,42.234657 C36.7839727,42.234657 41.3692955,40.068592 43.5156167,36.602888 L43.7107367,36.2779783 L43.3204965,35.6281587 C43.0278165,35.0866425 42.9302562,34.436823 43.1253765,33.7870035 C43.3204965,33.137184 43.6131767,32.5956678 44.100977,32.270758 C44.3936572,32.0541515 44.7838975,31.9458485 45.1741377,31.9458485 C45.9546182,31.9458485 46.6375385,32.3790613 47.0277787,33.137184 L51.5155415,41.6931408 C52.003342,42.234657 52.100902,42.8844765 51.9057817,43.4259928 Z'
+});
+var _default = MailruIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/MailruShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function mailruLink(url, _a) {
+  var title = _a.title,
+      description = _a.description,
+      imageUrl = _a.imageUrl;
+  (0, _assert.default)(url, 'mailru.url');
+  return 'https://connect.mail.ru/share' + (0, _objectToGetParams.default)({
+    url: url,
+    title: title,
+    description: description,
+    image_url: imageUrl
+  });
+}
+
+var MailruShareButton = (0, _createShareButton.default)('mailru', mailruLink, function (props) {
+  return {
+    title: props.title,
+    description: props.description,
+    imageUrl: props.imageUrl
+  };
+}, {
+  windowWidth: 660,
+  windowHeight: 460
+});
+var _default = MailruShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/OKIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var OKIcon = (0, _createIcon.default)({
+  color: '#f2720c',
+  networkName: 'ok',
+  path: 'M39,30c-1,0-3,2-7,2s-6-2-7-2c-1.1,0-2,0.9-2,2c0,1,0.6,1.5,1,1.7c1.2,0.7,5,2.3,5,2.3l-4.3,5.4   c0,0-0.8,0.9-0.8,1.6c0,1.1,0.9,2,2,2c1,0,1.5-0.7,1.5-0.7S32,39,32,39c0,0,4.5,5.3,4.5,5.3S37,45,38,45c1.1,0,2-0.9,2-2   c0-0.6-0.8-1.6-0.8-1.6L35,36c0,0,3.8-1.6,5-2.3c0.4-0.3,1-0.7,1-1.7C41,30.9,40.1,30,39,30z M32,15c-3.9,0-7,3.1-7,7s3.1,7,7,7c3.9,0,7-3.1,7-7S35.9,15,32,15z M32,25.5   c-1.9,0-3.5-1.6-3.5-3.5c0-1.9,1.6-3.5,3.5-3.5c1.9,0,3.5,1.6,3.5,3.5C35.5,23.9,33.9,22.5,35,22.5z '
+});
+var _default = OKIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/OKShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function okLink(url, _a) {
+  var title = _a.title,
+      description = _a.description,
+      image = _a.image;
+  (0, _assert.default)(url, 'ok.url');
+  return 'https://connect.ok.ru/offer' + (0, _objectToGetParams.default)({
+    url: url,
+    title: title,
+    description: description,
+    imageUrl: image
+  });
+}
+
+var OKShareButton = (0, _createShareButton.default)('ok', okLink, function (props) {
+  return {
+    title: props.title,
+    description: props.description,
+    image: props.image
+  };
+}, {
+  windowWidth: 588,
+  windowHeight: 480,
+  windowPosition: 'screenCenter'
+});
+var _default = OKShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/OKShareCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _jsonp = _interopRequireDefault(require("jsonp"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareCount = _interopRequireDefault(require("./hocs/createShareCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getOKShareCount(shareUrl, callback) {
+  if (!window.OK) {
+    window.OK = {
+      Share: {
+        count: function count(index, _count) {
+          window.OK.callbacks[index](_count);
+        }
+      },
+      callbacks: []
+    };
+  }
+
+  var url = 'https://connect.ok.ru/dk';
+  var index = window.OK.callbacks.length;
+  window.ODKL = {
+    updateCount: function updateCount(a, b) {
+      window.OK.callbacks[index](b);
+    }
+  };
+  window.OK.callbacks.push(callback);
+  return (0, _jsonp.default)(url + (0, _objectToGetParams.default)({
+    'st.cmd': 'extLike',
+    uid: 'odklcnt0',
+    ref: shareUrl
+  }));
+}
+
+var _default = (0, _createShareCount.default)(getOKShareCount);
+
+exports.default = _default;
+},{"jsonp":"../node_modules/jsonp/index.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareCount":"../node_modules/react-share/es/hocs/createShareCount.js"}],"../node_modules/react-share/es/PinterestIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PinterestIcon = (0, _createIcon.default)({
+  color: '#cb2128',
+  networkName: 'pinterest',
+  path: 'M32,16c-8.8,0-16,7.2-16,16c0,6.6,3.9,12.2,9.6,14.7c0-1.1,0-2.5,0.3-3.7 c0.3-1.3,2.1-8.7,2.1-8.7s-0.5-1-0.5-2.5c0-2.4,1.4-4.1,3.1-4.1c1.5,0,2.2,1.1,2.2,2.4c0,1.5-0.9,3.7-1.4,5.7 c-0.4,1.7,0.9,3.1,2.5,3.1c3,0,5.1-3.9,5.1-8.5c0-3.5-2.4-6.1-6.7-6.1c-4.9,0-7.9,3.6-7.9,7.7c0,1.4,0.4,2.4,1.1,3.1 c0.3,0.3,0.3,0.5,0.2,0.9c-0.1,0.3-0.3,1-0.3,1.3c-0.1,0.4-0.4,0.6-0.8,0.4c-2.2-0.9-3.3-3.4-3.3-6.1c0-4.5,3.8-10,11.4-10 c6.1,0,10.1,4.4,10.1,9.2c0,6.3-3.5,11-8.6,11c-1.7,0-3.4-0.9-3.9-2c0,0-0.9,3.7-1.1,4.4c-0.3,1.2-1,2.5-1.6,3.4 c1.4,0.4,3,0.7,4.5,0.7c8.8,0,16-7.2,16-16C48,23.2,40.8,16,32,16z'
+});
+var _default = PinterestIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/PinterestShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function pinterestLink(url, _a) {
+  var media = _a.media,
+      description = _a.description;
+  (0, _assert.default)(url, 'pinterest.url');
+  (0, _assert.default)(media, 'pinterest.media');
+  return 'https://pinterest.com/pin/create/button/' + (0, _objectToGetParams.default)({
+    url: url,
+    media: media,
+    description: description
+  });
+}
+
+var PinterestShareButton = (0, _createShareButton.default)('pinterest', pinterestLink, function (props) {
+  return {
+    media: props.media,
+    description: props.description
+  };
+}, {
+  windowWidth: 1000,
+  windowHeight: 730
+});
+var _default = PinterestShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/PinterestShareCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _jsonp = _interopRequireDefault(require("jsonp"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareCount = _interopRequireDefault(require("./hocs/createShareCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getPinterestShareCount(shareUrl, callback) {
+  var url = 'https://api.pinterest.com/v1/urls/count.json';
+  (0, _jsonp.default)(url + (0, _objectToGetParams.default)({
+    url: shareUrl
+  }), function (err, data) {
+    callback(data ? data.count : undefined);
+  });
+}
+
+var _default = (0, _createShareCount.default)(getPinterestShareCount);
+
+exports.default = _default;
+},{"jsonp":"../node_modules/jsonp/index.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareCount":"../node_modules/react-share/es/hocs/createShareCount.js"}],"../node_modules/react-share/es/PocketIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PocketIcon = (0, _createIcon.default)({
+  color: '#EF3F56',
+  networkName: 'pocket',
+  path: 'M41.084 29.065l-7.528 7.882a2.104 2.104 0 0 1-1.521.666 2.106 2.106 0 0 1-1.522-.666l-7.528-7.882c-.876-.914-.902-2.43-.065-3.384.84-.955 2.228-.987 3.1-.072l6.015 6.286 6.022-6.286c.88-.918 2.263-.883 3.102.071.841.938.82 2.465-.06 3.383l-.015.002zm6.777-10.976C47.463 16.84 46.361 16 45.14 16H18.905c-1.2 0-2.289.82-2.716 2.044-.125.363-.189.743-.189 1.125v10.539l.112 2.096c.464 4.766 2.73 8.933 6.243 11.838.06.053.125.102.19.153l.04.033c1.882 1.499 3.986 2.514 6.259 3.014a14.662 14.662 0 0 0 6.13.052c.118-.042.235-.065.353-.087.03 0 .065-.022.098-.042a15.395 15.395 0 0 0 6.011-2.945l.039-.045.18-.153c3.502-2.902 5.765-7.072 6.248-11.852L48 29.674v-10.52c0-.366-.041-.728-.161-1.08l.022.015z'
+});
+var _default = PocketIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/PocketShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function pocketLink(url, _a) {
+  var title = _a.title;
+  (0, _assert.default)(url, 'pocket.url');
+  return 'https://getpocket.com/save' + (0, _objectToGetParams.default)({
+    url: url,
+    title: title
+  });
+}
+
+var PocketShareButton = (0, _createShareButton.default)('pocket', pocketLink, function (props) {
+  return {
+    title: props.title
+  };
+}, {
+  windowWidth: 500,
+  windowHeight: 500
+});
+var _default = PocketShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js"}],"../node_modules/react-share/es/RedditIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var RedditIcon = (0, _createIcon.default)({
+  color: '#5f99cf',
+  networkName: 'reddit',
+  path: 'm 52.8165,31.942362 c 0,-2.4803 -2.0264,-4.4965 -4.5169,-4.4965 -1.2155,0 -2.3171,0.4862 -3.128,1.2682 -3.077,-2.0247 -7.2403,-3.3133 -11.8507,-3.4782 l 2.5211,-7.9373 6.8272,1.5997 -0.0102,0.0986 c 0,2.0281 1.6575,3.6771 3.6958,3.6771 2.0366,0 3.6924,-1.649 3.6924,-3.6771 0,-2.0281 -1.6575,-3.6788 -3.6924,-3.6788 -1.564,0 -2.8968,0.9758 -3.4357,2.3443 l -7.3593,-1.7255 c -0.3213,-0.0782 -0.6477,0.1071 -0.748,0.4233 L 32,25.212062 c -4.8246,0.0578 -9.1953,1.3566 -12.41,3.4425 -0.8058,-0.7446 -1.8751,-1.2104 -3.0583,-1.2104 -2.4905,0 -4.5152,2.0179 -4.5152,4.4982 0,1.649 0.9061,3.0787 2.2389,3.8607 -0.0884,0.4794 -0.1462,0.9639 -0.1462,1.4569 0,6.6487 8.1736,12.0581 18.2223,12.0581 10.0487,0 18.224,-5.4094 18.224,-12.0581 0,-0.4658 -0.0493,-0.9248 -0.1275,-1.377 1.4144,-0.7599 2.3885,-2.2304 2.3885,-3.9406 z m -29.2808,3.0872 c 0,-1.4756 1.207,-2.6775 2.6894,-2.6775 1.4824,0 2.6877,1.2019 2.6877,2.6775 0,1.4756 -1.2053,2.6758 -2.6877,2.6758 -1.4824,0 -2.6894,-1.2002 -2.6894,-2.6758 z m 15.4037,7.9373 c -1.3549,1.3481 -3.4816,2.0043 -6.5008,2.0043 l -0.0221,-0.0051 -0.0221,0.0051 c -3.0209,0 -5.1476,-0.6562 -6.5008,-2.0043 -0.2465,-0.2448 -0.2465,-0.6443 0,-0.8891 0.2465,-0.2465 0.6477,-0.2465 0.8942,0 1.105,1.0999 2.9393,1.6337 5.6066,1.6337 l 0.0221,0.0051 0.0221,-0.0051 c 2.6673,0 4.5016,-0.5355 5.6066,-1.6354 0.2465,-0.2465 0.6477,-0.2448 0.8942,0 0.2465,0.2465 0.2465,0.6443 0,0.8908 z m -0.3213,-5.2615 c -1.4824,0 -2.6877,-1.2002 -2.6877,-2.6758 0,-1.4756 1.2053,-2.6775 2.6877,-2.6775 1.4824,0 2.6877,1.2019 2.6877,2.6775 0,1.4756 -1.2053,2.6758 -2.6877,2.6758 z'
+});
+var _default = RedditIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/RedditShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function redditLink(url, _a) {
+  var title = _a.title;
+  (0, _assert.default)(url, 'reddit.url');
+  return 'https://www.reddit.com/submit' + (0, _objectToGetParams.default)({
+    url: url,
+    title: title
+  });
+}
+
+var RedditShareButton = (0, _createShareButton.default)('reddit', redditLink, function (props) {
+  return {
+    title: props.title
+  };
+}, {
+  windowWidth: 660,
+  windowHeight: 460,
+  windowPosition: 'windowCenter'
+});
+var _default = RedditShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/RedditShareCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _jsonp = _interopRequireDefault(require("jsonp"));
+
+var _createShareCount = _interopRequireDefault(require("./hocs/createShareCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getRedditShareCount(shareUrl, callback) {
+  var endpoint = "https://www.reddit.com/api/info.json?limit=1&url=" + shareUrl;
+  (0, _jsonp.default)(endpoint, {
+    param: 'jsonp'
+  }, function (err, response) {
+    callback(!err && response && response.data && response.data.children.length > 0 && response.data.children[0].data.score ? response.data.children[0].data.score : undefined);
+  });
+}
+
+var _default = (0, _createShareCount.default)(getRedditShareCount);
+
+exports.default = _default;
+},{"jsonp":"../node_modules/jsonp/index.js","./hocs/createShareCount":"../node_modules/react-share/es/hocs/createShareCount.js"}],"../node_modules/react-share/es/TelegramIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TelegramIcon = (0, _createIcon.default)({
+  color: '#37aee2',
+  networkName: 'telegram',
+  path: 'm45.90873,15.44335c-0.6901,-0.0281 -1.37668,0.14048 -1.96142,0.41265c-0.84989,0.32661 -8.63939,3.33986 -16.5237,6.39174c-3.9685,1.53296 -7.93349,3.06593 -10.98537,4.24067c-3.05012,1.1765 -5.34694,2.05098 -5.4681,2.09312c-0.80775,0.28096 -1.89996,0.63566 -2.82712,1.72788c-0.23354,0.27218 -0.46884,0.62161 -0.58825,1.10275c-0.11941,0.48114 -0.06673,1.09222 0.16682,1.5716c0.46533,0.96052 1.25376,1.35737 2.18443,1.71383c3.09051,0.99037 6.28638,1.93508 8.93263,2.8236c0.97632,3.44171 1.91401,6.89571 2.84116,10.34268c0.30554,0.69185 0.97105,0.94823 1.65764,0.95525l-0.00351,0.03512c0,0 0.53908,0.05268 1.06412,-0.07375c0.52679,-0.12292 1.18879,-0.42846 1.79109,-0.99212c0.662,-0.62161 2.45836,-2.38812 3.47683,-3.38552l7.6736,5.66477l0.06146,0.03512c0,0 0.84989,0.59703 2.09312,0.68132c0.62161,0.04214 1.4399,-0.07726 2.14229,-0.59176c0.70766,-0.51626 1.1765,-1.34683 1.396,-2.29506c0.65673,-2.86224 5.00979,-23.57745 5.75257,-27.00686l-0.02107,0.08077c0.51977,-1.93157 0.32837,-3.70159 -0.87096,-4.74991c-0.60054,-0.52152 -1.2924,-0.7498 -1.98425,-0.77965l0,0.00176zm-0.2072,3.29069c0.04741,0.0439 0.0439,0.0439 0.00351,0.04741c-0.01229,-0.00351 0.14048,0.2072 -0.15804,1.32576l-0.01229,0.04214l-0.00878,0.03863c-0.75858,3.50668 -5.15554,24.40802 -5.74203,26.96472c-0.08077,0.34417 -0.11414,0.31959 -0.09482,0.29852c-0.1756,-0.02634 -0.50045,-0.16506 -0.52679,-0.1756l-13.13468,-9.70175c4.4988,-4.33199 9.09945,-8.25307 13.744,-12.43229c0.8218,-0.41265 0.68483,-1.68573 -0.29852,-1.70681c-1.04305,0.24584 -1.92279,0.99564 -2.8798,1.47502c-5.49971,3.2626 -11.11882,6.13186 -16.55882,9.49279c-2.792,-0.97105 -5.57873,-1.77704 -8.15298,-2.57601c2.2336,-0.89555 4.00889,-1.55579 5.75608,-2.23009c3.05188,-1.1765 7.01687,-2.7042 10.98537,-4.24067c7.94051,-3.06944 15.92667,-6.16346 16.62028,-6.43037l0.05619,-0.02283l0.05268,-0.02283c0.19316,-0.0878 0.30378,-0.09658 0.35471,-0.10009c0,0 -0.01756,-0.05795 -0.00351,-0.04566l-0.00176,0zm-20.91715,22.0638l2.16687,1.60145c-0.93418,0.91311 -1.81743,1.77353 -2.45485,2.38812l0.28798,-3.98957'
+});
+var _default = TelegramIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/TelegramShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function telegramLink(url, _a) {
+  var title = _a.title;
+  (0, _assert.default)(url, 'telegram.url');
+  return 'https://telegram.me/share/' + (0, _objectToGetParams.default)({
+    url: url,
+    text: title
+  });
+}
+
+var TelegramShareButton = (0, _createShareButton.default)('telegram', telegramLink, function (props) {
+  return {
+    title: props.title
+  };
+}, {
+  windowWidth: 550,
+  windowHeight: 400
+});
+var _default = TelegramShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/TumblrIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TumblrIcon = (0, _createIcon.default)({
+  color: '#2c4762',
+  networkName: 'tumblr',
+  path: 'M39.2,41c-0.6,0.3-1.6,0.5-2.4,0.5c-2.4,0.1-2.9-1.7-2.9-3v-9.3h6v-4.5h-6V17c0,0-4.3,0-4.4,0 c-0.1,0-0.2,0.1-0.2,0.2c-0.3,2.3-1.4,6.4-5.9,8.1v3.9h3V39c0,3.4,2.5,8.1,9,8c2.2,0,4.7-1,5.2-1.8L39.2,41z'
+});
+var _default = TumblrIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/TumblrShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function tumblrLink(url, _a) {
+  var title = _a.title,
+      caption = _a.caption,
+      tags = _a.tags,
+      posttype = _a.posttype;
+  (0, _assert.default)(url, 'tumblr.url');
+  return 'https://www.tumblr.com/widgets/share/tool' + (0, _objectToGetParams.default)({
+    canonicalUrl: url,
+    title: title,
+    caption: caption,
+    tags: tags,
+    posttype: posttype
+  });
+}
+
+var TumblrShareButton = (0, _createShareButton.default)('tumblr', tumblrLink, function (props) {
+  return {
+    title: props.title,
+    tags: (props.tags || []).join(','),
+    caption: props.caption,
+    posttype: props.posttype
+  };
+}, {
+  tags: [],
+  posttype: 'link',
+  windowWidth: 660,
+  windowHeight: 460
+});
+var _default = TumblrShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/TumblrShareCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _jsonp = _interopRequireDefault(require("jsonp"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareCount = _interopRequireDefault(require("./hocs/createShareCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getTumblrShareCount(shareUrl, callback) {
+  var endpoint = 'https://api.tumblr.com/v2/share/stats';
+  return (0, _jsonp.default)(endpoint + (0, _objectToGetParams.default)({
+    url: shareUrl
+  }), function (err, data) {
+    callback(!err && data && data.response ? data.response.note_count : undefined);
+  });
+}
+
+var _default = (0, _createShareCount.default)(getTumblrShareCount);
+
+exports.default = _default;
+},{"jsonp":"../node_modules/jsonp/index.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareCount":"../node_modules/react-share/es/hocs/createShareCount.js"}],"../node_modules/react-share/es/TwitterIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TwitterIcon = (0, _createIcon.default)({
+  color: '#00aced',
+  networkName: 'twitter',
+  path: 'M48,22.1c-1.2,0.5-2.4,0.9-3.8,1c1.4-0.8,2.4-2.1,2.9-3.6c-1.3,0.8-2.7,1.3-4.2,1.6 C41.7,19.8,40,19,38.2,19c-3.6,0-6.6,2.9-6.6,6.6c0,0.5,0.1,1,0.2,1.5c-5.5-0.3-10.3-2.9-13.5-6.9c-0.6,1-0.9,2.1-0.9,3.3 c0,2.3,1.2,4.3,2.9,5.5c-1.1,0-2.1-0.3-3-0.8c0,0,0,0.1,0,0.1c0,3.2,2.3,5.8,5.3,6.4c-0.6,0.1-1.1,0.2-1.7,0.2c-0.4,0-0.8,0-1.2-0.1 c0.8,2.6,3.3,4.5,6.1,4.6c-2.2,1.8-5.1,2.8-8.2,2.8c-0.5,0-1.1,0-1.6-0.1c2.9,1.9,6.4,2.9,10.1,2.9c12.1,0,18.7-10,18.7-18.7 c0-0.3,0-0.6,0-0.8C46,24.5,47.1,23.4,48,22.1z'
+});
+var _default = TwitterIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/TwitterShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function twitterLink(url, _a) {
+  var title = _a.title,
+      via = _a.via,
+      _b = _a.hashtags,
+      hashtags = _b === void 0 ? [] : _b;
+  (0, _assert.default)(url, 'twitter.url');
+  (0, _assert.default)(Array.isArray(hashtags), 'twitter.hashtags is not an array');
+  return 'https://twitter.com/share' + (0, _objectToGetParams.default)({
+    url: url,
+    text: title,
+    via: via,
+    hashtags: hashtags.join(',')
+  });
+}
+
+var TwitterShareButton = (0, _createShareButton.default)('twitter', twitterLink, function (props) {
+  return {
+    hashtags: props.hashtags,
+    title: props.title,
+    via: props.via
+  };
+}, {
+  windowWidth: 550,
+  windowHeight: 400
+});
+var _default = TwitterShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/ViberIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ViberIcon = (0, _createIcon.default)({
+  color: '#7C529E',
+  networkName: 'viber',
+  path: 'm31.0,12.3c9.0,0.2 16.4,6.2 18.0,15.2c0.2,1.5 0.3,3.0 0.4,4.6a1.0,1.0 0 0 1 -0.8,1.2l-0.1,0a1.1,1.1 0 0 1 -1.0,-1.2l0,0c-0.0,-1.2 -0.1,-2.5 -0.3,-3.8a16.1,16.1 0 0 0 -13.0,-13.5c-1.0,-0.1 -2.0,-0.2 -3.0,-0.3c-0.6,-0.0 -1.4,-0.1 -1.6,-0.8a1.1,1.1 0 0 1 0.9,-1.2l0.6,0l0.0,-0.0zm10.6,39.2a19.9,19.9 0 0 1 -2.1,-0.6c-6.9,-2.9 -13.2,-6.6 -18.3,-12.2a47.5,47.5 0 0 1 -7.0,-10.7c-0.8,-1.8 -1.6,-3.7 -2.4,-5.6c-0.6,-1.7 0.3,-3.4 1.4,-4.7a11.3,11.3 0 0 1 3.7,-2.8a2.4,2.4 0 0 1 3.0,0.7a39.0,39.0 0 0 1 4.7,6.5a3.1,3.1 0 0 1 -0.8,4.2c-0.3,0.2 -0.6,0.5 -1.0,0.8a3.3,3.3 0 0 0 -0.7,0.7a2.1,2.1 0 0 0 -0.1,1.9c1.7,4.9 4.7,8.7 9.7,10.8a5.0,5.0 0 0 0 2.5,0.6c1.5,-0.1 2.0,-1.8 3.1,-2.7a2.9,2.9 0 0 1 3.5,-0.1c1.1,0.7 2.2,1.4 3.3,2.2a37.8,37.8 0 0 1 3.1,2.4a2.4,2.4 0 0 1 0.7,3.0a10.4,10.4 0 0 1 -4.4,4.8a10.8,10.8 0 0 1 -1.9,0.6c-0.7,-0.2 0.6,-0.2 0,0l0.0,0l0,-0.0zm3.1,-21.4a4.2,4.2 0 0 1 -0.0,0.6a1.0,1.0 0 0 1 -1.9,0.1a2.7,2.7 0 0 1 -0.1,-0.8a10.9,10.9 0 0 0 -1.4,-5.5a10.2,10.2 0 0 0 -4.2,-4.0a12.3,12.3 0 0 0 -3.4,-1.0c-0.5,-0.0 -1.0,-0.1 -1.5,-0.2a0.9,0.9 0 0 1 -0.9,-1.0l0,-0.1a0.9,0.9 0 0 1 0.9,-0.9l0.1,0a14.1,14.1 0 0 1 5.9,1.5a11.9,11.9 0 0 1 6.5,9.3c0,0.1 0.0,0.3 0.0,0.5c0,0.4 0.0,0.9 0.0,1.5l0,0l0.0,0.0zm-5.6,-0.2a1.1,1.1 0 0 1 -1.2,-0.9l0,-0.1a11.3,11.3 0 0 0 -0.2,-1.4a4.0,4.0 0 0 0 -1.5,-2.3a3.9,3.9 0 0 0 -1.2,-0.5c-0.5,-0.1 -1.1,-0.1 -1.6,-0.2a1.0,1.0 0 0 1 -0.8,-1.1l0,0l0,0a1.0,1.0 0 0 1 1.1,-0.8c3.4,0.2 6.0,2.0 6.3,6.2a2.8,2.8 0 0 1 0,0.8a0.8,0.8 0 0 1 -0.8,0.7l0,0l0.0,-0.0z'
+});
+var _default = ViberIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/ViberShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function viberLink(url, _a) {
+  var title = _a.title,
+      separator = _a.separator;
+  (0, _assert.default)(url, 'viber.url');
+  return 'viber://forward' + (0, _objectToGetParams.default)({
+    text: title ? title + separator + url : url
+  });
+}
+
+var ViberShareButton = (0, _createShareButton.default)('viber', viberLink, function (props) {
+  return {
+    title: props.title,
+    separator: props.separator
+  };
+}, {
+  separator: ' ',
+  windowWidth: 660,
+  windowHeight: 460
+});
+var _default = ViberShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/VKIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var VKIcon = (0, _createIcon.default)({
+  color: '#45668e',
+  networkName: 'vk',
+  path: 'M44.94,44.84h-0.2c-2.17-.36-3.66-1.92-4.92-3.37C39.1,40.66,38,38.81,36.7,39c-1.85.3-.93,3.52-1.71,4.9-0.62,1.11-3.29.91-5.12,0.71-5.79-.62-8.75-3.77-11.35-7.14A64.13,64.13,0,0,1,11.6,26a10.59,10.59,0,0,1-1.51-4.49C11,20.7,12.56,21,14.11,21c1.31,0,3.36-.29,4.32.2C19,21.46,19.57,23,20,24a37.18,37.18,0,0,0,3.31,5.82c0.56,0.81,1.41,2.35,2.41,2.14s1.06-2.63,1.1-4.18c0-1.77,0-4-.5-4.9S25,22,24.15,21.47c0.73-1.49,2.72-1.63,5.12-1.63,2,0,4.84-.23,5.62,1.12s0.25,3.85.2,5.71c-0.06,2.09-.41,4.25,1,5.21,1.09-.12,1.68-1.2,2.31-2A28,28,0,0,0,41.72,24c0.44-1,.91-2.65,1.71-3,1.21-.47,3.15-0.1,4.92-0.1,1.46,0,4.05-.41,4.52.61,0.39,0.85-.75,3-1.1,3.57a61.88,61.88,0,0,1-4.12,5.61c-0.58.78-1.78,2-1.71,3.27,0.05,0.94,1,1.67,1.71,2.35a33.12,33.12,0,0,1,3.92,4.18c0.47,0.62,1.5,2,1.4,2.76C52.66,45.81,46.88,44.24,44.94,44.84Z'
+});
+var _default = VKIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/VKShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function vkLink(url, _a) {
+  var title = _a.title,
+      image = _a.image,
+      noParse = _a.noParse,
+      noVkLinks = _a.noVkLinks;
+  (0, _assert.default)(url, 'vk.url');
+  return 'https://vk.com/share.php' + (0, _objectToGetParams.default)({
+    url: url,
+    title: title,
+    image: image,
+    noparse: noParse ? 1 : 0,
+    no_vk_links: noVkLinks ? 1 : 0
+  });
+}
+
+var VKShareButton = (0, _createShareButton.default)('vk', vkLink, function (props) {
+  return {
+    title: props.title,
+    image: props.image,
+    noParse: props.noParse,
+    noVkLinks: props.noVkLinks
+  };
+}, {
+  windowWidth: 660,
+  windowHeight: 460
+});
+var _default = VKShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/VKShareCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _jsonp = _interopRequireDefault(require("jsonp"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareCount = _interopRequireDefault(require("./hocs/createShareCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getVKShareCount(shareUrl, callback) {
+  if (!window.VK) {
+    window.VK = {
+      Share: {
+        count: function count(index, _count) {
+          return window.VK.callbacks[index](_count);
+        }
+      },
+      callbacks: []
+    };
+  }
+
+  var url = 'https://vk.com/share.php';
+  var index = window.VK.callbacks.length;
+  window.VK.callbacks.push(callback);
+  return (0, _jsonp.default)(url + (0, _objectToGetParams.default)({
+    act: 'count',
+    index: index,
+    url: shareUrl
+  }));
+}
+
+var _default = (0, _createShareCount.default)(getVKShareCount);
+
+exports.default = _default;
+},{"jsonp":"../node_modules/jsonp/index.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareCount":"../node_modules/react-share/es/hocs/createShareCount.js"}],"../node_modules/react-share/es/WeiboIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var WeiboIcon = (0, _createIcon.default)({
+  color: '#CD201F',
+  networkName: 'weibo',
+  path: 'M40.9756152,15.0217119 C40.5000732,15.0546301 39.9999314,15.1204666 39.5325878,15.2192213 C38.6634928,15.4085016 38.0977589,16.2643757 38.2863368,17.1284787 C38.4667163,18.0008129 39.3194143,18.5686519 40.1885094,18.3793715 C42.8613908,17.8115326 45.7720411,18.6427174 47.7316073,20.8153207 C49.6911735,22.996153 50.2077122,25.975254 49.3714112,28.5840234 C49.1008441,29.4316684 49.5763861,30.3533789 50.4208857,30.6249537 C51.2653852,30.8965286 52.1754769,30.4192153 52.4542425,29.5715703 C53.6349013,25.9011885 52.9133876,21.7699494 50.1585171,18.7085538 C48.0923641,16.4042776 45.2063093,15.1533848 42.3530505,15.0217119 C41.8775084,14.9970227 41.4511594,14.9887937 40.9756152,15.0217119 Z M27.9227762,19.8277737 C24.9957268,20.140498 20.863421,22.4365431 17.2312548,26.0822378 C13.2711279,30.0571148 11,34.2871065 11,37.9328012 C11,44.9032373 19.8713401,49.125 28.5786978,49.125 C39.9917329,49.125 47.600423,42.4261409 47.600423,37.1427636 C47.600423,33.9496952 44.9603397,32.1638816 42.549827,31.4149913 C41.9594976,31.2339421 41.5167516,31.1434164 41.8283133,30.3616079 C42.5006339,28.66632 42.6236176,27.1932286 41.8939054,26.1480742 C40.5328692,24.1894405 36.7203236,24.2881952 32.448635,26.0822378 C32.448635,26.0822378 31.1203949,26.6912261 31.4647526,25.6213825 C32.1206742,23.4981576 32.0304845,21.712342 31.0056075,20.6836478 C30.2840938,19.9512176 29.2510184,19.6878718 27.9227762,19.8277737 Z M42.0906819,20.6836478 C41.6233383,20.6589586 41.1723917,20.716566 40.7132466,20.8153207 C39.9671353,20.9716828 39.4997917,21.7781784 39.6637721,22.5270687 C39.8277525,23.275959 40.5574647,23.7450433 41.303576,23.5804521 C42.1972686,23.3911718 43.2057485,23.6380596 43.8616701,24.3704897 C44.5175916,25.1029198 44.6733735,26.0657797 44.3864073,26.9381118 C44.1486363,27.6705419 44.5093932,28.4770397 45.2391054,28.7156963 C45.9688176,28.9461239 46.780521,28.5922524 47.0100936,27.8598223 C47.584026,26.0740087 47.2396661,24.0248493 45.8950269,22.5270687 C44.886547,21.4078489 43.4845162,20.7494842 42.0906819,20.6836478 Z M29.496988,29.9665891 C35.3100922,30.1723275 39.9917329,33.0691319 40.3852858,37.0769272 C40.8362324,41.6607904 35.5970585,45.9319315 28.6442899,46.6232144 C21.6915214,47.3144973 15.6488446,44.154347 15.197898,39.5787128 C14.7469514,34.9948495 20.059916,30.7237084 27.004486,30.0324256 C27.8735831,29.950131 28.6688875,29.9336709 29.496988,29.9665891 Z M25.5614586,34.3776322 C23.183744,34.5916017 20.9372116,35.9577073 19.9205332,37.9328012 C18.5348994,40.6238672 19.9041362,43.6029661 23.0689567,44.582284 C26.340366,45.5945202 30.1857056,44.0638213 31.5303448,41.1587879 C32.8503864,38.3195909 31.1613894,35.3734082 27.9227762,34.5751416 C27.1438688,34.3776322 26.356763,34.3035667 25.5614586,34.3776322 Z M24.052839,38.7228388 C24.3316067,38.7310678 24.5857748,38.8215935 24.8399449,38.9203482 C25.8648218,39.3400561 26.1845841,40.4428158 25.5614586,41.4221338 C24.9219361,42.3932227 23.5690963,42.8623069 22.5442194,42.4096807 C21.5357395,41.9652856 21.2487754,40.8542948 21.8882979,39.9078951 C22.3638421,39.2001542 23.2247386,38.7146097 24.052839,38.7228388 Z'
+});
+var _default = WeiboIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/WeiboShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function weiboLink(url, _a) {
+  var title = _a.title,
+      image = _a.image;
+  (0, _assert.default)(url, 'weibo.url');
+  return 'http://service.weibo.com/share/share.php' + (0, _objectToGetParams.default)({
+    url: url,
+    title: title,
+    pic: image
+  });
+}
+
+var WeiboShareButton = (0, _createShareButton.default)('weibo', weiboLink, function (props) {
+  return {
+    title: props.title,
+    image: props.image
+  };
+}, {
+  windowWidth: 660,
+  windowHeight: 550,
+  windowPosition: 'screenCenter'
+});
+var _default = WeiboShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/WhatsappIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var WhatsappIcon = (0, _createIcon.default)({
+  color: '#2cb742',
+  networkName: 'whatsapp',
+  path: 'm42.32286,33.93287c-0.5178,-0.2589 -3.04726,-1.49644 -3.52105,-1.66732c-0.4712,-0.17346 -0.81554,-0.2589 -1.15987,0.2589c-0.34175,0.51004 -1.33075,1.66474 -1.63108,2.00648c-0.30032,0.33658 -0.60064,0.36247 -1.11327,0.12945c-0.5178,-0.2589 -2.17994,-0.80259 -4.14759,-2.56312c-1.53269,-1.37217 -2.56312,-3.05503 -2.86603,-3.57283c-0.30033,-0.5178 -0.03366,-0.80259 0.22524,-1.06149c0.23301,-0.23301 0.5178,-0.59547 0.7767,-0.90616c0.25372,-0.31068 0.33657,-0.5178 0.51262,-0.85437c0.17088,-0.36246 0.08544,-0.64725 -0.04402,-0.90615c-0.12945,-0.2589 -1.15987,-2.79613 -1.58964,-3.80584c-0.41424,-1.00971 -0.84142,-0.88027 -1.15987,-0.88027c-0.29773,-0.02588 -0.64208,-0.02588 -0.98382,-0.02588c-0.34693,0 -0.90616,0.12945 -1.37736,0.62136c-0.4712,0.5178 -1.80194,1.76053 -1.80194,4.27186c0,2.51134 1.84596,4.945 2.10227,5.30747c0.2589,0.33657 3.63497,5.51458 8.80262,7.74113c1.23237,0.5178 2.1903,0.82848 2.94111,1.08738c1.23237,0.38836 2.35599,0.33657 3.24402,0.20712c0.99159,-0.15534 3.04985,-1.24272 3.47963,-2.45956c0.44013,-1.21683 0.44013,-2.22654 0.31068,-2.45955c-0.12945,-0.23301 -0.46601,-0.36247 -0.98382,-0.59548m-9.40068,12.84407l-0.02589,0c-3.05503,0 -6.08417,-0.82849 -8.72495,-2.38189l-0.62136,-0.37023l-6.47252,1.68286l1.73463,-6.29129l-0.41424,-0.64725c-1.70875,-2.71846 -2.6149,-5.85116 -2.6149,-9.07706c0,-9.39809 7.68934,-17.06155 17.15993,-17.06155c4.58253,0 8.88029,1.78642 12.11655,5.02268c3.23625,3.21036 5.02267,7.50812 5.02267,12.06476c-0.0078,9.3981 -7.69712,17.06155 -17.14699,17.06155m14.58906,-31.58846c-3.93529,-3.80584 -9.1133,-5.95471 -14.62789,-5.95471c-11.36055,0 -20.60848,9.2065 -20.61625,20.52564c0,3.61684 0.94757,7.14565 2.75211,10.26282l-2.92557,10.63564l10.93337,-2.85309c3.0136,1.63108 6.4052,2.4958 9.85634,2.49839l0.01037,0c11.36574,0 20.61884,-9.2091 20.62403,-20.53082c0,-5.48093 -2.14111,-10.64081 -6.03239,-14.51915'
+});
+var _default = WhatsappIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/WhatsappShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isMobileOrTablet() {
+  return /(android|iphone|ipad|mobile)/i.test(navigator.userAgent);
+}
+
+function whatsappLink(url, _a) {
+  var title = _a.title,
+      separator = _a.separator;
+  (0, _assert.default)(url, 'whatsapp.url');
+  return 'https://' + (isMobileOrTablet() ? 'api' : 'web') + '.whatsapp.com/send' + (0, _objectToGetParams.default)({
+    text: title ? title + separator + url : url
+  });
+}
+
+var WhatsappShareButton = (0, _createShareButton.default)('whatsapp', whatsappLink, function (props) {
+  return {
+    title: props.title,
+    separator: props.separator
+  };
+}, {
+  separator: ' ',
+  windowWidth: 550,
+  windowHeight: 400
+});
+var _default = WhatsappShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/WorkplaceIcon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createIcon = _interopRequireDefault(require("./hocs/createIcon"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var WorkplaceIcon = (0, _createIcon.default)({
+  color: '#3b3d4a',
+  networkName: 'workplace',
+  path: 'M34.019,10.292c0.21,0.017,0.423,0.034,0.636,0.049 c3.657,0.262,6.976,1.464,9.929,3.635c3.331,2.448,5.635,5.65,6.914,9.584c0.699,2.152,0.983,4.365,0.885,6.623 c-0.136,3.171-1.008,6.13-2.619,8.867c-0.442,0.75-0.908,1.492-1.495,2.141c-0.588,0.651-1.29,1.141-2.146,1.383 c-1.496,0.426-3.247-0.283-3.961-1.642c-0.26-0.494-0.442-1.028-0.654-1.548c-1.156-2.838-2.311-5.679-3.465-8.519 c-0.017-0.042-0.037-0.082-0.065-0.145c-0.101,0.245-0.192,0.472-0.284,0.698c-1.237,3.051-2.475,6.103-3.711,9.155 c-0.466,1.153-1.351,1.815-2.538,2.045c-1.391,0.267-2.577-0.154-3.496-1.247c-0.174-0.209-0.31-0.464-0.415-0.717 c-2.128-5.22-4.248-10.442-6.37-15.665c-0.012-0.029-0.021-0.059-0.036-0.104c0.054-0.003,0.103-0.006,0.15-0.006 c1.498-0.001,2.997,0,4.495-0.004c0.12-0.001,0.176,0.03,0.222,0.146c1.557,3.846,3.117,7.691,4.679,11.536 c0.018,0.046,0.039,0.091,0.067,0.159c0.273-0.673,0.536-1.32,0.797-1.968c1.064-2.627,2.137-5.25,3.19-7.883 c0.482-1.208,1.376-1.917,2.621-2.135c1.454-0.255,2.644,0.257,3.522,1.449c0.133,0.18,0.229,0.393,0.313,0.603 c1.425,3.495,2.848,6.991,4.269,10.488c0.02,0.047,0.04,0.093,0.073,0.172c0.196-0.327,0.385-0.625,0.559-0.935 c0.783-1.397,1.323-2.886,1.614-4.461c0.242-1.312,0.304-2.634,0.187-3.962c-0.242-2.721-1.16-5.192-2.792-7.38 c-2.193-2.939-5.086-4.824-8.673-5.625c-1.553-0.346-3.124-0.405-4.705-0.257c-3.162,0.298-6.036,1.366-8.585,3.258 c-3.414,2.534-5.638,5.871-6.623,10.016c-0.417,1.76-0.546,3.547-0.384,5.348c0.417,4.601,2.359,8.444,5.804,11.517 c2.325,2.073,5.037,3.393,8.094,3.989c1.617,0.317,3.247,0.395,4.889,0.242c1-0.094,1.982-0.268,2.952-0.529 c0.04-0.01,0.081-0.018,0.128-0.028c0,1.526,0,3.047,0,4.586c-0.402,0.074-0.805,0.154-1.21,0.221 c-0.861,0.14-1.728,0.231-2.601,0.258c-0.035,0.002-0.071,0.013-0.108,0.021c-0.493,0-0.983,0-1.476,0 c-0.049-0.007-0.1-0.018-0.149-0.022c-0.315-0.019-0.629-0.033-0.945-0.058c-1.362-0.105-2.702-0.346-4.017-0.716 c-3.254-0.914-6.145-2.495-8.66-4.752c-2.195-1.971-3.926-4.29-5.176-6.963c-1.152-2.466-1.822-5.057-1.993-7.774 c-0.014-0.226-0.033-0.451-0.05-0.676c0-0.502,0-1.003,0-1.504c0.008-0.049,0.02-0.099,0.022-0.148 c0.036-1.025,0.152-2.043,0.338-3.052c0.481-2.616,1.409-5.066,2.8-7.331c2.226-3.625,5.25-6.386,9.074-8.254 c2.536-1.24,5.217-1.947,8.037-2.126c0.23-0.015,0.461-0.034,0.691-0.051C33.052,10.292,33.535,10.292,34.019,10.292z'
+});
+var _default = WorkplaceIcon;
+exports.default = _default;
+},{"./hocs/createIcon":"../node_modules/react-share/es/hocs/createIcon.js"}],"../node_modules/react-share/es/WorkplaceShareButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _assert = _interopRequireDefault(require("assert"));
+
+var _objectToGetParams = _interopRequireDefault(require("./utils/objectToGetParams"));
+
+var _createShareButton = _interopRequireDefault(require("./hocs/createShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function workplaceLink(url, _a) {
+  var quote = _a.quote,
+      hashtag = _a.hashtag;
+  (0, _assert.default)(url, 'workplace.url');
+  return 'https://work.facebook.com/sharer.php' + (0, _objectToGetParams.default)({
+    u: url,
+    quote: quote,
+    hashtag: hashtag
+  });
+}
+
+var WorkplaceShareButton = (0, _createShareButton.default)('workplace', workplaceLink, function (props) {
+  return {
+    quote: props.quote,
+    hashtag: props.hashtag
+  };
+}, {
+  windowWidth: 550,
+  windowHeight: 400
+});
+var _default = WorkplaceShareButton;
+exports.default = _default;
+},{"assert":"../node_modules/assert/assert.js","./utils/objectToGetParams":"../node_modules/react-share/es/utils/objectToGetParams.js","./hocs/createShareButton":"../node_modules/react-share/es/hocs/createShareButton.js"}],"../node_modules/react-share/es/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "EmailIcon", {
+  enumerable: true,
+  get: function () {
+    return _EmailIcon.default;
+  }
+});
+Object.defineProperty(exports, "EmailShareButton", {
+  enumerable: true,
+  get: function () {
+    return _EmailShareButton.default;
+  }
+});
+Object.defineProperty(exports, "FacebookIcon", {
+  enumerable: true,
+  get: function () {
+    return _FacebookIcon.default;
+  }
+});
+Object.defineProperty(exports, "FacebookMessengerIcon", {
+  enumerable: true,
+  get: function () {
+    return _FacebookMessengerIcon.default;
+  }
+});
+Object.defineProperty(exports, "FacebookMessengerShareButton", {
+  enumerable: true,
+  get: function () {
+    return _FacebookMessengerShareButton.default;
+  }
+});
+Object.defineProperty(exports, "FacebookShareButton", {
+  enumerable: true,
+  get: function () {
+    return _FacebookShareButton.default;
+  }
+});
+Object.defineProperty(exports, "FacebookShareCount", {
+  enumerable: true,
+  get: function () {
+    return _FacebookShareCount.default;
+  }
+});
+Object.defineProperty(exports, "InstapaperIcon", {
+  enumerable: true,
+  get: function () {
+    return _InstapaperIcon.default;
+  }
+});
+Object.defineProperty(exports, "InstapaperShareButton", {
+  enumerable: true,
+  get: function () {
+    return _InstapaperShareButton.default;
+  }
+});
+Object.defineProperty(exports, "LineIcon", {
+  enumerable: true,
+  get: function () {
+    return _LineIcon.default;
+  }
+});
+Object.defineProperty(exports, "LineShareButton", {
+  enumerable: true,
+  get: function () {
+    return _LineShareButton.default;
+  }
+});
+Object.defineProperty(exports, "LinkedinIcon", {
+  enumerable: true,
+  get: function () {
+    return _LinkedinIcon.default;
+  }
+});
+Object.defineProperty(exports, "LinkedinShareButton", {
+  enumerable: true,
+  get: function () {
+    return _LinkedinShareButton.default;
+  }
+});
+Object.defineProperty(exports, "LivejournalIcon", {
+  enumerable: true,
+  get: function () {
+    return _LivejournalIcon.default;
+  }
+});
+Object.defineProperty(exports, "LivejournalShareButton", {
+  enumerable: true,
+  get: function () {
+    return _LivejournalShareButton.default;
+  }
+});
+Object.defineProperty(exports, "MailruIcon", {
+  enumerable: true,
+  get: function () {
+    return _MailruIcon.default;
+  }
+});
+Object.defineProperty(exports, "MailruShareButton", {
+  enumerable: true,
+  get: function () {
+    return _MailruShareButton.default;
+  }
+});
+Object.defineProperty(exports, "OKIcon", {
+  enumerable: true,
+  get: function () {
+    return _OKIcon.default;
+  }
+});
+Object.defineProperty(exports, "OKShareButton", {
+  enumerable: true,
+  get: function () {
+    return _OKShareButton.default;
+  }
+});
+Object.defineProperty(exports, "OKShareCount", {
+  enumerable: true,
+  get: function () {
+    return _OKShareCount.default;
+  }
+});
+Object.defineProperty(exports, "PinterestIcon", {
+  enumerable: true,
+  get: function () {
+    return _PinterestIcon.default;
+  }
+});
+Object.defineProperty(exports, "PinterestShareButton", {
+  enumerable: true,
+  get: function () {
+    return _PinterestShareButton.default;
+  }
+});
+Object.defineProperty(exports, "PinterestShareCount", {
+  enumerable: true,
+  get: function () {
+    return _PinterestShareCount.default;
+  }
+});
+Object.defineProperty(exports, "PocketIcon", {
+  enumerable: true,
+  get: function () {
+    return _PocketIcon.default;
+  }
+});
+Object.defineProperty(exports, "PocketShareButton", {
+  enumerable: true,
+  get: function () {
+    return _PocketShareButton.default;
+  }
+});
+Object.defineProperty(exports, "RedditIcon", {
+  enumerable: true,
+  get: function () {
+    return _RedditIcon.default;
+  }
+});
+Object.defineProperty(exports, "RedditShareButton", {
+  enumerable: true,
+  get: function () {
+    return _RedditShareButton.default;
+  }
+});
+Object.defineProperty(exports, "RedditShareCount", {
+  enumerable: true,
+  get: function () {
+    return _RedditShareCount.default;
+  }
+});
+Object.defineProperty(exports, "TelegramIcon", {
+  enumerable: true,
+  get: function () {
+    return _TelegramIcon.default;
+  }
+});
+Object.defineProperty(exports, "TelegramShareButton", {
+  enumerable: true,
+  get: function () {
+    return _TelegramShareButton.default;
+  }
+});
+Object.defineProperty(exports, "TumblrIcon", {
+  enumerable: true,
+  get: function () {
+    return _TumblrIcon.default;
+  }
+});
+Object.defineProperty(exports, "TumblrShareButton", {
+  enumerable: true,
+  get: function () {
+    return _TumblrShareButton.default;
+  }
+});
+Object.defineProperty(exports, "TumblrShareCount", {
+  enumerable: true,
+  get: function () {
+    return _TumblrShareCount.default;
+  }
+});
+Object.defineProperty(exports, "TwitterIcon", {
+  enumerable: true,
+  get: function () {
+    return _TwitterIcon.default;
+  }
+});
+Object.defineProperty(exports, "TwitterShareButton", {
+  enumerable: true,
+  get: function () {
+    return _TwitterShareButton.default;
+  }
+});
+Object.defineProperty(exports, "ViberIcon", {
+  enumerable: true,
+  get: function () {
+    return _ViberIcon.default;
+  }
+});
+Object.defineProperty(exports, "ViberShareButton", {
+  enumerable: true,
+  get: function () {
+    return _ViberShareButton.default;
+  }
+});
+Object.defineProperty(exports, "VKIcon", {
+  enumerable: true,
+  get: function () {
+    return _VKIcon.default;
+  }
+});
+Object.defineProperty(exports, "VKShareButton", {
+  enumerable: true,
+  get: function () {
+    return _VKShareButton.default;
+  }
+});
+Object.defineProperty(exports, "VKShareCount", {
+  enumerable: true,
+  get: function () {
+    return _VKShareCount.default;
+  }
+});
+Object.defineProperty(exports, "WeiboIcon", {
+  enumerable: true,
+  get: function () {
+    return _WeiboIcon.default;
+  }
+});
+Object.defineProperty(exports, "WeiboShareButton", {
+  enumerable: true,
+  get: function () {
+    return _WeiboShareButton.default;
+  }
+});
+Object.defineProperty(exports, "WhatsappIcon", {
+  enumerable: true,
+  get: function () {
+    return _WhatsappIcon.default;
+  }
+});
+Object.defineProperty(exports, "WhatsappShareButton", {
+  enumerable: true,
+  get: function () {
+    return _WhatsappShareButton.default;
+  }
+});
+Object.defineProperty(exports, "WorkplaceIcon", {
+  enumerable: true,
+  get: function () {
+    return _WorkplaceIcon.default;
+  }
+});
+Object.defineProperty(exports, "WorkplaceShareButton", {
+  enumerable: true,
+  get: function () {
+    return _WorkplaceShareButton.default;
+  }
+});
+
+var _EmailIcon = _interopRequireDefault(require("./EmailIcon"));
+
+var _EmailShareButton = _interopRequireDefault(require("./EmailShareButton"));
+
+var _FacebookIcon = _interopRequireDefault(require("./FacebookIcon"));
+
+var _FacebookMessengerIcon = _interopRequireDefault(require("./FacebookMessengerIcon"));
+
+var _FacebookMessengerShareButton = _interopRequireDefault(require("./FacebookMessengerShareButton"));
+
+var _FacebookShareButton = _interopRequireDefault(require("./FacebookShareButton"));
+
+var _FacebookShareCount = _interopRequireDefault(require("./FacebookShareCount"));
+
+var _InstapaperIcon = _interopRequireDefault(require("./InstapaperIcon"));
+
+var _InstapaperShareButton = _interopRequireDefault(require("./InstapaperShareButton"));
+
+var _LineIcon = _interopRequireDefault(require("./LineIcon"));
+
+var _LineShareButton = _interopRequireDefault(require("./LineShareButton"));
+
+var _LinkedinIcon = _interopRequireDefault(require("./LinkedinIcon"));
+
+var _LinkedinShareButton = _interopRequireDefault(require("./LinkedinShareButton"));
+
+var _LivejournalIcon = _interopRequireDefault(require("./LivejournalIcon"));
+
+var _LivejournalShareButton = _interopRequireDefault(require("./LivejournalShareButton"));
+
+var _MailruIcon = _interopRequireDefault(require("./MailruIcon"));
+
+var _MailruShareButton = _interopRequireDefault(require("./MailruShareButton"));
+
+var _OKIcon = _interopRequireDefault(require("./OKIcon"));
+
+var _OKShareButton = _interopRequireDefault(require("./OKShareButton"));
+
+var _OKShareCount = _interopRequireDefault(require("./OKShareCount"));
+
+var _PinterestIcon = _interopRequireDefault(require("./PinterestIcon"));
+
+var _PinterestShareButton = _interopRequireDefault(require("./PinterestShareButton"));
+
+var _PinterestShareCount = _interopRequireDefault(require("./PinterestShareCount"));
+
+var _PocketIcon = _interopRequireDefault(require("./PocketIcon"));
+
+var _PocketShareButton = _interopRequireDefault(require("./PocketShareButton"));
+
+var _RedditIcon = _interopRequireDefault(require("./RedditIcon"));
+
+var _RedditShareButton = _interopRequireDefault(require("./RedditShareButton"));
+
+var _RedditShareCount = _interopRequireDefault(require("./RedditShareCount"));
+
+var _TelegramIcon = _interopRequireDefault(require("./TelegramIcon"));
+
+var _TelegramShareButton = _interopRequireDefault(require("./TelegramShareButton"));
+
+var _TumblrIcon = _interopRequireDefault(require("./TumblrIcon"));
+
+var _TumblrShareButton = _interopRequireDefault(require("./TumblrShareButton"));
+
+var _TumblrShareCount = _interopRequireDefault(require("./TumblrShareCount"));
+
+var _TwitterIcon = _interopRequireDefault(require("./TwitterIcon"));
+
+var _TwitterShareButton = _interopRequireDefault(require("./TwitterShareButton"));
+
+var _ViberIcon = _interopRequireDefault(require("./ViberIcon"));
+
+var _ViberShareButton = _interopRequireDefault(require("./ViberShareButton"));
+
+var _VKIcon = _interopRequireDefault(require("./VKIcon"));
+
+var _VKShareButton = _interopRequireDefault(require("./VKShareButton"));
+
+var _VKShareCount = _interopRequireDefault(require("./VKShareCount"));
+
+var _WeiboIcon = _interopRequireDefault(require("./WeiboIcon"));
+
+var _WeiboShareButton = _interopRequireDefault(require("./WeiboShareButton"));
+
+var _WhatsappIcon = _interopRequireDefault(require("./WhatsappIcon"));
+
+var _WhatsappShareButton = _interopRequireDefault(require("./WhatsappShareButton"));
+
+var _WorkplaceIcon = _interopRequireDefault(require("./WorkplaceIcon"));
+
+var _WorkplaceShareButton = _interopRequireDefault(require("./WorkplaceShareButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./EmailIcon":"../node_modules/react-share/es/EmailIcon.js","./EmailShareButton":"../node_modules/react-share/es/EmailShareButton.js","./FacebookIcon":"../node_modules/react-share/es/FacebookIcon.js","./FacebookMessengerIcon":"../node_modules/react-share/es/FacebookMessengerIcon.js","./FacebookMessengerShareButton":"../node_modules/react-share/es/FacebookMessengerShareButton.js","./FacebookShareButton":"../node_modules/react-share/es/FacebookShareButton.js","./FacebookShareCount":"../node_modules/react-share/es/FacebookShareCount.js","./InstapaperIcon":"../node_modules/react-share/es/InstapaperIcon.js","./InstapaperShareButton":"../node_modules/react-share/es/InstapaperShareButton.js","./LineIcon":"../node_modules/react-share/es/LineIcon.js","./LineShareButton":"../node_modules/react-share/es/LineShareButton.js","./LinkedinIcon":"../node_modules/react-share/es/LinkedinIcon.js","./LinkedinShareButton":"../node_modules/react-share/es/LinkedinShareButton.js","./LivejournalIcon":"../node_modules/react-share/es/LivejournalIcon.js","./LivejournalShareButton":"../node_modules/react-share/es/LivejournalShareButton.js","./MailruIcon":"../node_modules/react-share/es/MailruIcon.js","./MailruShareButton":"../node_modules/react-share/es/MailruShareButton.js","./OKIcon":"../node_modules/react-share/es/OKIcon.js","./OKShareButton":"../node_modules/react-share/es/OKShareButton.js","./OKShareCount":"../node_modules/react-share/es/OKShareCount.js","./PinterestIcon":"../node_modules/react-share/es/PinterestIcon.js","./PinterestShareButton":"../node_modules/react-share/es/PinterestShareButton.js","./PinterestShareCount":"../node_modules/react-share/es/PinterestShareCount.js","./PocketIcon":"../node_modules/react-share/es/PocketIcon.js","./PocketShareButton":"../node_modules/react-share/es/PocketShareButton.js","./RedditIcon":"../node_modules/react-share/es/RedditIcon.js","./RedditShareButton":"../node_modules/react-share/es/RedditShareButton.js","./RedditShareCount":"../node_modules/react-share/es/RedditShareCount.js","./TelegramIcon":"../node_modules/react-share/es/TelegramIcon.js","./TelegramShareButton":"../node_modules/react-share/es/TelegramShareButton.js","./TumblrIcon":"../node_modules/react-share/es/TumblrIcon.js","./TumblrShareButton":"../node_modules/react-share/es/TumblrShareButton.js","./TumblrShareCount":"../node_modules/react-share/es/TumblrShareCount.js","./TwitterIcon":"../node_modules/react-share/es/TwitterIcon.js","./TwitterShareButton":"../node_modules/react-share/es/TwitterShareButton.js","./ViberIcon":"../node_modules/react-share/es/ViberIcon.js","./ViberShareButton":"../node_modules/react-share/es/ViberShareButton.js","./VKIcon":"../node_modules/react-share/es/VKIcon.js","./VKShareButton":"../node_modules/react-share/es/VKShareButton.js","./VKShareCount":"../node_modules/react-share/es/VKShareCount.js","./WeiboIcon":"../node_modules/react-share/es/WeiboIcon.js","./WeiboShareButton":"../node_modules/react-share/es/WeiboShareButton.js","./WhatsappIcon":"../node_modules/react-share/es/WhatsappIcon.js","./WhatsappShareButton":"../node_modules/react-share/es/WhatsappShareButton.js","./WorkplaceIcon":"../node_modules/react-share/es/WorkplaceIcon.js","./WorkplaceShareButton":"../node_modules/react-share/es/WorkplaceShareButton.js"}],"components/app/style.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -29561,6 +34117,8 @@ var _reactDom = _interopRequireDefault(require("react-dom"));
 var _input = _interopRequireDefault(require("/components/input"));
 
 var _list = _interopRequireDefault(require("/components/list"));
+
+var _reactShare = require("react-share");
 
 require("./style.scss");
 
@@ -29608,6 +34166,7 @@ var App = /*#__PURE__*/function (_React$Component) {
     _this.generateItemID = _this.generateItemID.bind(_assertThisInitialized(_this));
     _this.addItem = _this.addItem.bind(_assertThisInitialized(_this));
     _this.checkItem = _this.checkItem.bind(_assertThisInitialized(_this));
+    _this.removeItem = _this.removeItem.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -29646,10 +34205,20 @@ var App = /*#__PURE__*/function (_React$Component) {
       var index = list.findIndex(function (item) {
         return item.id === id;
       });
-      console.log("index", index);
-      console.log("list", list);
-      console.log("id", id);
       list[index].isChecked = true;
+      this.setState({
+        list: list
+      });
+      this.updateLocalStorage();
+    }
+  }, {
+    key: "removeItem",
+    value: function removeItem(id) {
+      var list = this.state.list;
+      var index = list.findIndex(function (item) {
+        return item.id === id;
+      });
+      list.splice(index, 1);
       this.setState({
         list: list
       });
@@ -29664,7 +34233,8 @@ var App = /*#__PURE__*/function (_React$Component) {
         addItem: this.addItem
       }), _react.default.createElement(_list.default, {
         list: this.state.list,
-        checkItem: this.checkItem
+        checkItem: this.checkItem,
+        deleteItem: this.removeItem
       }));
     }
   }]);
@@ -29673,7 +34243,7 @@ var App = /*#__PURE__*/function (_React$Component) {
 }(_react.default.Component);
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","/components/input":"components/input/index.js","/components/list":"components/list/index.js","./style.scss":"components/app/style.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","/components/input":"components/input/index.js","/components/list":"components/list/index.js","react-share":"../node_modules/react-share/es/index.js","./style.scss":"components/app/style.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -29701,7 +34271,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50956" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63132" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

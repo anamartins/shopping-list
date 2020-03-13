@@ -1,0 +1,14 @@
+.print {
+  text-align: right;
+  img {
+    width: 7%;
+    padding: 2%;
+    margin: 2%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e8c574;
+      border-radius: 5px;
+    }
+  }
+}

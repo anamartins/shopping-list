@@ -1,5 +1,6 @@
 import React from "react";
 import Item from "/components/item";
+import Print from "/components/print";
 import PropTypes from "prop-types";
 import "./style.scss";
 
@@ -8,11 +9,16 @@ class List extends React.Component {
     super(props);
 
     this.onClickItem = this.onClickItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
     this.renderItems = this.renderItems.bind(this);
   }
 
   onClickItem(id) {
     this.props.checkItem(id);
+  }
+
+  deleteItem(id) {
+    this.props.deleteItem(id);
   }
 
   renderItems() {
@@ -26,21 +32,31 @@ class List extends React.Component {
           text={this.props.list[i].text}
           isChecked={this.props.list[i].isChecked}
           onClickItem={this.onClickItem}
+          deleteItem={this.deleteItem}
         />
       );
     }
-    console.log("list on list", list);
     return list;
   }
 
   render() {
-    return <div className="list">{this.renderItems()}</div>;
+    return this.props.list.length !== 0 ? (
+      <div className="list">
+        {this.renderItems()}
+        <Print />
+      </div>
+    ) : (
+      <div className="doodle">
+        <img src="/img/girl-computer.svg" />
+      </div>
+    );
   }
 }
 
 List.propTypes = {
   list: PropTypes.array,
-  checkItem: PropTypes.func
+  checkItem: PropTypes.func,
+  deleteItem: PropTypes.func
 };
 
 export default List;

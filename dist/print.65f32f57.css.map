@@ -1,0 +1,1 @@
+{"version":3,"sources":["print.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"print.65f32f57.css","sourceRoot":"../src","sourcesContent":[".input {\n  visibility: hidden;\n}\n\n.list {\n  background-color: white;\n  width: 90%;\n}\n"]}
