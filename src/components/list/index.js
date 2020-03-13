@@ -47,7 +47,7 @@ class List extends React.Component {
       </div>
     ) : (
       <div className="doodle">
-        <img src="/img/girl-computer.svg" />
+        <img src="img/girl-computer.svg" />
       </div>
     );
   }
