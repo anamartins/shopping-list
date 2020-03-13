@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  width: 50%;
+  width: 90%;
   margin: 1% auto;
   padding: 2% 2% 0 5%;
   background-color: #ffe88c;
@@ -10,8 +10,30 @@
 
 .doodle {
   padding: 3%;
-
   img {
-    width: 40%;
+    width: 80%;
+  }
+}
+
+@media (min-width: 550px) {
+  .list {
+    width: 80%;
+  }
+  .doodle {
+    img {
+      width: 60%;
+    }
+  }
+}
+
+@media (min-width: 850px) {
+  .list {
+    width: 50%;
+  }
+
+  .doodle {
+    img {
+      width: 40%;
+    }
   }
 }

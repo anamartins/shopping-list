@@ -29518,7 +29518,7 @@ var Print = /*#__PURE__*/function (_React$Component) {
       return _react.default.createElement("div", {
         className: "print"
       }, _react.default.createElement("img", {
-        src: "/img/printer.svg",
+        src: "img/printer.svg",
         onClick: this.onPrinterClick
       }));
     }
@@ -29624,7 +29624,7 @@ var List = /*#__PURE__*/function (_React$Component) {
       }, this.renderItems(), _react.default.createElement(_print.default, null)) : _react.default.createElement("div", {
         className: "doodle"
       }, _react.default.createElement("img", {
-        src: "/img/girl-computer.svg"
+        src: "img/girl-computer.svg"
       }));
     }
   }]);
@@ -34271,7 +34271,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63132" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54487" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

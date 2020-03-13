@@ -1,5 +1,5 @@
 .input {
-  width: 50%;
+  width: 100%;
   margin: 3% auto;
   display: flex;
   justify-content: center;
@@ -19,5 +19,17 @@
     padding: 0.5rem;
     margin-left: 1%;
     align-items: center;
+  }
+}
+
+@media (min-width: 550px) {
+  .input {
+    width: 80%;
+  }
+}
+
+@media (min-width: 850px) {
+  .input {
+    width: 50%;
   }
 }

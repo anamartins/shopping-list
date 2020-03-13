@@ -5,7 +5,7 @@ html {
 
 h1 {
   font-family: "Permanent Marker", sans-serif;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .wrapper {
@@ -22,5 +22,17 @@ h1 {
     background-color: white;
     width: 90%;
     margin: -10% 10%;
+  }
+}
+
+@media (min-width: 550px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 850px) {
+  h1 {
+    font-size: 3rem;
   }
 }
