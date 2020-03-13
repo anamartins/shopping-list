@@ -14,7 +14,7 @@ class Print extends React.Component {
   render() {
     return (
       <div className="print">
-        <img src="/img/printer.svg" onClick={this.onPrinterClick} />
+        <img src="img/printer.svg" onClick={this.onPrinterClick} />
       </div>
     );
   }
