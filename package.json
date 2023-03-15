@@ -30,8 +30,7 @@
     "sass": "^1.26.1"
   },
   "dependencies": {
-    "parcel": "^1.12.4",
-    "parcel-bundler": "^1.12.4",
+    "parcel": "^2.8.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-share": "^4.0.1"
