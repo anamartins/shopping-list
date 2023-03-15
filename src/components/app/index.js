@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Input from "/components/input";
-import List from "/components/list";
+import Input from "../input";
+import List from "../list"
 
 import "./style.scss";
 
 class App extends React.Component {
-  r;
   constructor(props) {
     super(props);
     this.state = {
